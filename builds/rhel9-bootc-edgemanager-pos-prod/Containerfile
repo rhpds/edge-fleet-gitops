@@ -15,7 +15,12 @@ RUN dnf -y copr enable @redhat-et/flightctl && \
     dnf -y clean all && \
     systemctl enable flightctl-agent.service && \
     systemctl mask bootc-fetch-apply-updates.timer
+
+# Add flightctl agent config
 ADD .flightctl-agent-config/config.yaml /etc/flightctl/
+
+# Ignore registry certs
+ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/ocp-internal-registry.conf
 
 # Deploy "old" application via kustomization
 RUN mkdir -p /etc/microshift/manifests
