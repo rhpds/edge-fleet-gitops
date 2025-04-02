@@ -13,11 +13,12 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Create Flightctl Agent Config | Creates a configmap with the flightctl agent config, useful for builds later on | `charts/create-flightctl-agent-confg/` | [Example Values](./charts/create-flightctl-agent-config/example-values.yaml) |
 | Registry Auth | Creates a configmap with a registry auth file, useful for builds later on | `charts/registry-auth/` | None required |
 | Bootc Image Pipeline | Creates a pipeline that builds bootc images, and imports them for OCP virtualization | `charts/bootc-image-pipeline/` | [Example Values](./charts/bootc-image-pipeline/example-values.yaml) |
+| Student Virtual Machines | Creates virtual machines and supporting resources for students | `charts/student-virtual-machines/` | [Example Values](./charts/student-virtual-machines/example-values.yaml) |
 
 ## Input Values
 The following is an example of all values required by all charts to deploy, as an example:
 ```yaml
-
+---
 gitSource:
   url: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
   ref: main
@@ -35,5 +36,14 @@ bootcImageBuilderConfig:
 
 pullSecret: 'your-pull-secret-here'
 
+students:
+  - student1
+  - student2
+  - student3
 
+virtualMachines:
+  storageSize: 30Gi
+  storageClass: example-storage-class
+  sourcePvcName: source-pvc-here
+  sourcePvcNamespace: student-services
 ```
