@@ -1,0 +1,41 @@
+FROM registry.redhat.io/openshift4/microshift-bootc-rhel9:v4.18
+
+# Unset proxy env vars
+ENV NO_PROXY=
+ENV HTTP_PROXY=
+ENV HTTPS_PROXY=
+
+# Reset dnf
+RUN dnf -y clean all &&\
+    rm -rf /etc/yum.repos.d/unsigned.repo
+
+# Ensure flightctl agent is installed
+RUN dnf -y copr enable @redhat-et/flightctl && \
+    dnf -y install flightctl-agent && \
+    dnf -y clean all && \
+    systemctl enable flightctl-agent.service && \
+    systemctl mask bootc-fetch-apply-updates.timer
+ADD .flightctl-agent-config/config.yaml /etc/flightctl/
+
+# Deploy "old" application via kustomization
+RUN mkdir -p /etc/microshift/manifests
+COPY kustomization.yaml /etc/microshift/manifests/kustomization.yaml
+COPY deployment.yaml /etc/microshift/manifests/deployment.yaml
+COPY service.yaml /etc/microshift/manifests/service.yaml
+COPY route.yaml /etc/microshift/manifests/route.yaml
+
+# Let the applications through the firewall
+RUN firewall-offline-cmd --zone=public --add-port=30000/tcp
+RUN firewall-offline-cmd --zone=public --add-port=8080/tcp
+
+# Need a pull secret
+COPY pull-secret.txt /etc/crio/openshift-pull-secret
+
+# MTU magic
+COPY ovn.yaml /etc/microshift/ovn.yaml
+
+# Disable auto-updating
+RUN systemctl mask bootc-fetch-apply-updates.timer
+
+# Lint the build
+RUN bootc container lint
