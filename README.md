@@ -11,7 +11,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | ACM and RHEM | Installs the ACM operator, and creates an instance of MultiClusterHub with the Edge Manager preview plugin | `charts/acm-rhem/` | [Example Values](./charts/acm-rhem/example-values.yaml) |
 | Pipelines | Installs the pipelines functionality onto OCP | `charts/pipelines/` | None required |
 | Create Flightctl Agent Config | Creates a configmap with the flightctl agent config, useful for builds later on | `charts/create-flightctl-agent-confg/` | [Example Values](./charts/create-flightctl-agent-config/example-values.yaml) |
-
+| Registry Auth | Creates a configmap with a registry auth file, useful for builds later on | `charts/registry-auth/` | None required |
 
 ## Input Values
 The following is an example of all values required by all charts to deploy, as an example:
