@@ -12,6 +12,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Pipelines | Installs the pipelines functionality onto OCP | `charts/pipelines/` | None required |
 | Create Flightctl Agent Config | Creates a configmap with the flightctl agent config, useful for builds later on | `charts/create-flightctl-agent-confg/` | [Example Values](./charts/create-flightctl-agent-config/example-values.yaml) |
 | Registry Auth | Creates a configmap with a registry auth file, useful for builds later on | `charts/registry-auth/` | None required |
+| Bootc Image Pipeline | Creates a pipeline that builds bootc images, and imports them for OCP virtualization | `charts/bootc-image-pipeline/` | [Example Values](./charts/bootc-image-pipeline/example-values.yaml) |
 
 ## Input Values
 The following is an example of all values required by all charts to deploy, as an example:
@@ -27,5 +28,12 @@ advancedClusterManagement:
 openshiftAuth:
   username: your-username-here
   password: your-password-here
+
+bootcImageBuilderConfig:
+  username: example-username
+  password: example-password
+
+pullSecret: 'your-pull-secret-here'
+
 
 ```
