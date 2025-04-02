@@ -9,6 +9,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Build Images RBAC | Creates the appropriate rbac for a service account to build images using the build service | `charts/build-images-rbac/` | None required |
 | Build Flightctl CLI | Builds an image that has the flightctl CLI baked in, stores it in the internal registry | `charts/build-flightctl-cli/` | [Example Values](./charts/build-flightctl-cli/example-values.yaml) |
 | ACM and RHEM | Installs the ACM operator, and creates an instance of MultiClusterHub with the Edge Manager preview plugin | `charts/acm-rhem/` | [Example Values](./charts/acm-rhem/example-values.yaml) |
+| Pipelines | Installs the pipelines functionality onto OCP | `charts/pipelines/` | None required |
 
 
 ## Input Values
