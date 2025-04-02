@@ -6,3 +6,4 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Chart | Description | Path | Example Values |
 | --- | --- | --- | --- |
 | Student Namespaces | Creates a shared namespace called `student-services`, and optionally creates namespaces for students according to a provided list | `charts/student-namespaces/` | [Example Values](./charts/student-namespaces/example-values.yaml) |
+| Build Images RBAC | Creates the appropriate rbac for a service account to build images using the build service | `charts/build-images-rbac/` | None required |
