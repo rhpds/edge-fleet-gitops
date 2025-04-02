@@ -21,5 +21,5 @@ ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/ocp-internal-re
 # Disable auto-updates
 RUN systemctl mask bootc-fetch-apply-updates.timer
 
-# Lint the bui;d
+# Lint the build
 RUN bootc container lint
