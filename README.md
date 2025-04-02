@@ -10,6 +10,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Build Flightctl CLI | Builds an image that has the flightctl CLI baked in, stores it in the internal registry | `charts/build-flightctl-cli/` | [Example Values](./charts/build-flightctl-cli/example-values.yaml) |
 | ACM and RHEM | Installs the ACM operator, and creates an instance of MultiClusterHub with the Edge Manager preview plugin | `charts/acm-rhem/` | [Example Values](./charts/acm-rhem/example-values.yaml) |
 | Pipelines | Installs the pipelines functionality onto OCP | `charts/pipelines/` | None required |
+| Create Flightctl Agent Config | Creates a configmap with the flightctl agent config, useful for builds later on | `charts/create-flightctl-agent-confg/` | [Example Values](./charts/create-flightctl-agent-config/example-values.yaml) |
 
 
 ## Input Values
@@ -19,5 +20,12 @@ The following is an example of all values required by all charts to deploy, as a
 gitSource:
   url: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
   ref: main
+
+advancedClusterManagement:
+  storageClassName: your-storage-class-here
+
+openshiftAuth:
+  username: your-username-here
+  password: your-password-here
 
 ```
