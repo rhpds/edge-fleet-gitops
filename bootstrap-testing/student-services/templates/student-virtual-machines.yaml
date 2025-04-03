@@ -21,4 +21,6 @@ spec:
     helm:
       values: |
         students:
-{{ toYaml .Values.students | nindent 10 }}
+{{- toYaml .Values.students | nindent 10 }}
+        virtualMachines:
+{{- toYaml .Values.virtualMachines | nindent 10 }}
