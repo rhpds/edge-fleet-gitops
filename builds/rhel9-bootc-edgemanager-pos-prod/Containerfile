@@ -34,7 +34,7 @@ RUN firewall-offline-cmd --zone=public --add-port=30000/tcp
 RUN firewall-offline-cmd --zone=public --add-port=8080/tcp
 
 # Need a pull secret
-COPY ./pull-secret/pull-secret.txt /etc/crio/openshift-pull-secret
+COPY /var/run/secrets/pull-secret/pull-secret.txt /etc/crio/openshift-pull-secret
 
 # MTU magic
 COPY ovn.yaml /etc/microshift/ovn.yaml

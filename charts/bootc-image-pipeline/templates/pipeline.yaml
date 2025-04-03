@@ -75,7 +75,7 @@ spec:
                   volumes:
                   - name: pull-secret
                     mounts:
-                    - destinationPath: .pull-secret
+                    - destinationPath: /var/run/secretes/pull-secret
                     source:
                       type: Secret
                       secret:
