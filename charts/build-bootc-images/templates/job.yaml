@@ -30,7 +30,7 @@ spec:
                   - name: imageVersion
                     value: {{ .version }}
                   - name: containerfilesDirectory
-                    value: {{ (.containerfilesDirectory }}
+                    value: {{ .containerfilesDirectory }}
                   - name: gitRepo
                     value: '{{ .gitRepo }}'
                   - name: gitRef
