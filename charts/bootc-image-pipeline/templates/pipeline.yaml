@@ -3,6 +3,8 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: build-bootc-image
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   params:
     - name: imageName
