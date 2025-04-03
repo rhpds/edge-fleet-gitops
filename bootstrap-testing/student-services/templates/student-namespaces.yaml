@@ -21,4 +21,6 @@ spec:
       values: |
         studentNamespaces:
           - student-services
-{{ toYaml .Values.studentNamespaces | nindent 10 }}
+{{- if .Values.studentNamespaces }}
+{{- toYaml .Values.studentNamespaces | nindent 10 }}
+{{- end }}
