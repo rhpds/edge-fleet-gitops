@@ -1,0 +1,78 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: approve-example-devices
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      backoffLimit: 5
+      containers:
+        - name: approve-devices
+          image: image-registry.openshift-image-registry.svc:5000/student-services/flightctl-cli:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              # Device name array
+              ALIASES=(
+{{- range .Values.storeDevices }}
+                "{{ .name }}"
+{{- end }}
+              )
+
+              TOTAL_DEVICES=${#ALIASES[@]}
+              APPROVED_COUNT=0
+
+              # Function to check the number of approved devices
+              count_approved_devices() {
+                flightctl get enrollmentrequests | awk 'NR>1 && $2 == "Approved"' | wc -l
+              }
+
+              # Main loop: runs until all devices are approved
+              while [ "$APPROVED_COUNT" -lt "$TOTAL_DEVICES" ]; do
+                echo "Checking for pending enrollment requests..."
+
+                # Fetch the list of pending devices
+                mapfile -t PENDING_DEVICE_IDS < <(
+                  flightctl get enrollmentrequests \
+                  | awk 'NR>1 && $2 == "Pending" { print $1 }'
+                )
+
+                for i in "${!PENDING_DEVICE_IDS[@]}"; do
+                  DEVICE_ID="${PENDING_DEVICE_IDS[$i]}"
+                  ALIAS="${ALIASES[$i]}"
+
+                  # Skip if there’s no alias for that index
+                  if [ -z "$ALIAS" ]; then
+                    echo "No alias specified for index $i (device ID: $DEVICE_ID). Skipping..."
+                    continue
+                  fi
+
+                  echo "Approving device '$DEVICE_ID' with alias='$ALIAS'..."
+                  flightctl approve -l "alias=${ALIAS}" -l "pos=prod" "enrollmentrequest/${DEVICE_ID}"
+
+                  # Increment the approved count
+                  APPROVED_COUNT=$((APPROVED_COUNT + 1))
+                  echo "Approved devices count: $APPROVED_COUNT/$TOTAL_DEVICES"
+                done
+
+                # Update the approved count
+                APPROVED_COUNT=$(count_approved_devices)
+
+                # Sleep for a few seconds before checking again
+                if [ "$APPROVED_COUNT" -lt "$TOTAL_DEVICES" ]; then
+                  echo "Waiting before checking again..."
+                  sleep 10
+                fi
+              done
+
+              echo "All devices have been approved!"
+
+
+
+
+
