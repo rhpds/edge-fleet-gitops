@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: example-store-devices
+  namespace: openshift-gitops
+  labels:
+    application: example-store-devices
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+    namespace: student-services
+  project: default
+  syncPolicy:
+    automated: {}
+  source:
+    repoURL: {{ .Values.gitRepo }}
+    targetRevision: {{ .Values.gitBranch | default "main" }}
+    path: charts/example-store-devices/
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+        virtualMachines:
+{{- toYaml .Values.virtualMachines | nindent 10 }}
