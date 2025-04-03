@@ -25,7 +25,12 @@ spec:
                 echo "Route not found, retrying in 5 seconds..."
                 sleep 5
               done
-              flightctl login "https://$FLIGHTCTL_API_URL" --username $FLIGHTCTL_USERNAME --password $FLIGHTCTL_PASSWORD --insecure-skip-tls-verify
+
+              until flightctl login "https://$FLIGHTCTL_API_URL" --username "$FLIGHTCTL_USERNAME" --password "$FLIGHTCTL_PASSWORD" --insecure-skip-tls-verify; do
+                echo "Login failed, retrying in 5 seconds..."
+                sleep 5
+              done
+
               flightctl certificate request --signer=enrollment --expiration=365d --output=embedded > config.yaml
               echo '---
               apiVersion: v1
