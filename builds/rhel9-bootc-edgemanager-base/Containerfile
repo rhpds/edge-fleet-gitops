@@ -16,7 +16,7 @@ RUN chmod 0600 /usr/lib/container-auth.json && \
     ln -sr /usr/lib/container-auth.json /etc/ostree/auth.json
 
 # Ignore registry certs
-ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/ocp-internal-registry.conf
+ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/999-ocp-internal-registry.conf
 
 # Disable auto-updates
 RUN systemctl mask bootc-fetch-apply-updates.timer

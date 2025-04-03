@@ -20,7 +20,7 @@ RUN dnf -y copr enable @redhat-et/flightctl && \
 ADD .flightctl-agent-config/config.yaml /etc/flightctl/
 
 # Ignore registry certs
-ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/ocp-internal-registry.conf
+ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/999-ocp-internal-registry.conf
 
 # Deploy "old" application via kustomization
 RUN mkdir -p /etc/microshift/manifests
