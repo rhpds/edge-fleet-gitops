@@ -20,5 +20,5 @@ spec:
     path: charts/build-flightctl-cli/
     helm:
       values: |
-        github:
-{{ toYaml .Values.github | nindent 10 }}
+        gitSource:
+{{ toYaml .Values.gitSource | nindent 10 }}
