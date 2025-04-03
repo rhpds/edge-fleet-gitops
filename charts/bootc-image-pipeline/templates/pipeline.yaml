@@ -72,14 +72,6 @@ spec:
                 type: Docker
                 dockerStrategy:
                   dockerfilePath: $(params.containerfilePath)
-                  volumes:
-                  - name: pull-secret
-                    mounts:
-                    - destinationPath: /var/run/secretes/pull-secret
-                    source:
-                      type: Secret
-                      secret:
-                        secretName: pull-secret
               source:
                 type: Git
                 git:
@@ -93,6 +85,10 @@ spec:
                   - configMap:
                       name: registry-auth
                     destinationDir: .registry-auth
+                secrets:
+                  - secret:
+                      name: pull-secret
+                    destinationDir: .pull-secret
       taskRef:
         kind: Task
         name: manage-k8s-object
