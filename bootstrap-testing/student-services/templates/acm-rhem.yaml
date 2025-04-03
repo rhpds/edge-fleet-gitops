@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: acm-rhem
+  namespace: openshift-gitops
+  labels:
+    application: acm-rhem
+spec:
+  destination:
+    name: ""
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+  source:
+    repoURL: {{ .Values.gitRepo }}
+    targetRevision: {{ .Values.gitBranch | default "main" }}
+    path: charts/acm-rhem/
+    helm:
+      values:
+        advancedClusterManagement:
+{{- .Values.advancedClusterManagement | nindent 10 }}
+
+          
