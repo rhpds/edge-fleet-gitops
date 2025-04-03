@@ -38,7 +38,9 @@ spec:
               metadata:
                 name: flightctl-agent-config
               data:
-                config.yaml: |' > /tmp/configmap.yaml
+                config.yaml: |
+                  spec-fetch-interval: 0m10s
+                  status-update-interval: 0m10s' > /tmp/configmap.yaml
               cat config.yaml | sed 's/^/    /g' >> /tmp/configmap.yaml
               oc apply -f configmap.yaml
           volumeMounts:
