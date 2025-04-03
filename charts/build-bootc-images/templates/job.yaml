@@ -42,7 +42,7 @@ spec:
                   - name: dataVolumeSize
                     value: {{ .dataVolumeSize }}
                   - name: bootcImageBuilderConfigMap
-                    value: {{ .bootcImageBuilderConfig }}
+                    value: {{ .bootcImageBuilderConfigMap }}
                 pipelineRef:
                   name: build-bootc-image
                 taskRunTemplate:
