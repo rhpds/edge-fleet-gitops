@@ -24,3 +24,8 @@ spec:
       values: |
         virtualMachines:
 {{- toYaml .Values.virtualMachines | nindent 10 }}
+        openshiftAuth:
+{{- with .Values.openshiftAuth }}
+          username: {{ .username }}
+          password: {{ .password }}
+{{- end }}

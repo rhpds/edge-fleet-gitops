@@ -17,6 +17,18 @@ spec:
             - /bin/bash
             - -c
             - |
+              FLIGHTCTL_USERNAME=$(cat /tmp/openshift-auth/username)
+              FLIGHTCTL_PASSWORD=$(cat /tmp/openshift-auth/password)
+              until FLIGHTCTL_API_URL=$(oc get route flightctl-api-route -n open-cluster-management -o go-template='{{ "{{" }}.spec.host{{ "}}" }}') && [ -n "$FLIGHTCTL_API_URL" ]; do
+                echo "Route not found, retrying in 5 seconds..."
+                sleep 5
+              done
+
+              until flightctl login "https://$FLIGHTCTL_API_URL" --username "$FLIGHTCTL_USERNAME" --password "$FLIGHTCTL_PASSWORD" --insecure-skip-tls-verify; do
+                echo "Login failed, retrying in 5 seconds..."
+                sleep 5
+              done
+
               # Device name array
               ALIASES=(
 {{- range .Values.storeDevices }}
@@ -71,7 +83,24 @@ spec:
               done
 
               echo "All devices have been approved!"
-
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: dot-config
+              mountPath: /.config
+            - name: openshift-auth
+              readOnly: true
+              mountPath: /tmp/openshift-auth
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 100Mi
+        - name: dot-config
+          emptyDir:
+            sizeLimit: 100Mi
+        - name: openshift-auth
+          secret:
+            secretName: openshift-auth
 
 
 
