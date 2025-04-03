@@ -22,7 +22,5 @@ spec:
       values: |
         gitSource:
 {{ toYaml .Values.gitSource | nindent 10 }}
-        rhsm:
-{{ toYaml .Values.rhsm | nindent 10 }}
         bootcImageBuilderConfig:
 {{ toYaml .Values.bootcImageBuilderConfig | nindent 10 }}
