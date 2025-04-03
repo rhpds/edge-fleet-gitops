@@ -6,4 +6,4 @@ metadata:
 rules:
   - apiGroups: ["config.openshift.io"]
     resources: ["consoles"]
-    verbs: ["patch"]
+    verbs: ["get", "patch"]
