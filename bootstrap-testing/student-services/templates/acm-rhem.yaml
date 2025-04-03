@@ -19,7 +19,7 @@ spec:
     targetRevision: {{ .Values.gitBranch | default "main" }}
     path: charts/acm-rhem/
     helm:
-      values:
+      values: |
         advancedClusterManagement:
 {{- .Values.advancedClusterManagement | nindent 10 }}
 
