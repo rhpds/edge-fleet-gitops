@@ -10,6 +10,7 @@ spec:
     spec:
       restartPolicy: OnFailure
       backoffLimit: 5
+      serviceAccountName: route-reader
       containers:
         - name: approve-devices
           image: image-registry.openshift-image-registry.svc:5000/student-services/flightctl-cli:latest
