@@ -23,7 +23,7 @@ metadata:
     vm.kubevirt.io/template.version: v0.32.2
   name: {{ .name }}
 spec:
-  runStrategy: Halted
+  runStrategy: Running
   template:
     metadata:
       annotations:
