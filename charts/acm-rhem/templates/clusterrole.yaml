@@ -4,6 +4,6 @@ kind: ClusterRole
 metadata:
   name: patch-console
 rules:
-  - apiGroups: ["config.openshift.io"]
-    resources: ["consoles"]
+  - apiGroups: ["consoles.operator.openshift.io"]
+    resources: ["cluster"]
     verbs: ["get", "patch"]

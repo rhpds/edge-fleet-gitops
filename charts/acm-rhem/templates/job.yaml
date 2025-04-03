@@ -18,4 +18,4 @@ spec:
             - /bin/sh
             - -c
             - |
-              oc patch console cluster --type='merge' -p '{"spec":{"plugins":["flightctl-plugin"]}}'
+              oc patch consoles.operator.openshift.io cluster --type='merge' -p '{"spec":{"plugins":["flightctl-plugin"]}}'
