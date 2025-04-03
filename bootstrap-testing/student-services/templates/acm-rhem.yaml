@@ -21,6 +21,6 @@ spec:
     helm:
       values: |
         advancedClusterManagement:
-{{- .Values.advancedClusterManagement | nindent 10 }}
+{{- toYaml .Values.advancedClusterManagement | nindent 10 }}
 
           
