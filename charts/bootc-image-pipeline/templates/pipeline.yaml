@@ -85,8 +85,6 @@ spec:
                 git:
                   uri: '$(params.gitRepo)'
                   ref: $(params.gitRef)
-                sourceSecret:
-                  name: bootc-image-build-github-secret
                 contextDir: $(params.containerfilesDirectory)
                 configMaps:
                   - configMap:
