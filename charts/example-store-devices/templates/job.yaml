@@ -18,6 +18,7 @@ spec:
             - /bin/bash
             - -c
             - |
+              set -euo pipefail
               FLIGHTCTL_USERNAME=$(cat /tmp/openshift-auth/username)
               FLIGHTCTL_PASSWORD=$(cat /tmp/openshift-auth/password)
               until FLIGHTCTL_API_URL=$(oc get route flightctl-api-route -n open-cluster-management -o go-template='{{ "{{" }}.spec.host{{ "}}" }}') && [ -n "$FLIGHTCTL_API_URL" ]; do
@@ -46,9 +47,15 @@ spec:
 
                 # Fetch all pending enrollment requests
                 mapfile -t PENDING_DEVICE_IDS < <(
-                  flightctl get enrollmentrequests \
+                  flightctl get enrollmentrequests 2>/dev/null \
                   | awk 'NR>1 && $2 == "Pending" { print $1 }'
                 )
+
+                if [ ${#PENDING_DEVICE_IDS[@]} -eq 0 ]; then
+                  echo "No pending devices found. Retrying in 10 seconds..."
+                  sleep 10
+                  continue
+                fi
 
                 # Approve each pending request with an unused alias
                 for DEVICE_ID in "${PENDING_DEVICE_IDS[@]}"; do
