@@ -15,11 +15,22 @@ spec:
             - /bin/bash
             - -c
             - |
+              # Log in and write the auth config
               oc registry login --to=/tmp/auth.json
+
+              # View contents
               cat /tmp/auth.json
-              if ! oc create configmap registry-auth --from-file=/tmp/auth.json; then
-                echo "ConfigMap already exists, updating it..."
-                oc create configmap registry-auth --from-file=/tmp/auth.json --dry-run=client -o yaml | oc apply -f -
+
+              # Check if the ConfigMap exists
+              if oc get configmap registry-auth >/dev/null 2>&1; then
+                echo "ConfigMap 'registry-auth' already exists. Updating it..."
+              else
+                echo "ConfigMap 'registry-auth' does not exist. Creating it..."
               fi
+
+              # Create or update the ConfigMap with the latest auth.json
+              oc create configmap registry-auth \
+                --from-file=/tmp/auth.json \
+                --dry-run=client -o yaml | oc apply -f -
       restartPolicy: OnFailure
 
