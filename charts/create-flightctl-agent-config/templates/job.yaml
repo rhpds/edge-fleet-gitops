@@ -109,7 +109,7 @@ spec:
                     labels: {}
                   spec:
                     os:
-                      image: 'image-registry.openshift-image-registry.svc.cluster.local:5000/student-services/rhel9-bootc-edgemanager-pos-prod:1.0.0'
+                      image: 'image-registry.openshift-image-registry.svc:5000/student-services/rhel9-bootc-edgemanager-pos-prod:1.0.0'
                     config: []
                     applications: []' > /tmp/fleet.yaml
               flightctl apply -f fleet.yaml

@@ -183,7 +183,7 @@ spec:
                         - /bin/bash
                         - -c
                         - |
-                          oc registry login --registry image-registry.openshift-image-registry.svc.cluster.local:5000 --to=/var/lib/containers/storage/registry.json
+                          oc registry login --registry image-registry.openshift-image-registry.svc:5000 --to=/var/lib/containers/storage/registry.json
                           mkdir -p /var/lib/containers/storage/overlay
                   containers:
                     - name: run-bib
@@ -206,8 +206,8 @@ spec:
                         - /bin/bash
                         - -c 
                         - |
-                          podman pull image-registry.openshift-image-registry.svc.cluster.local:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion) --authfile=/var/lib/containers/storage/registry.json --tls-verify=false
-                          bootc-image-builder --type qcow2 --config /config.toml --local image-registry.openshift-image-registry.svc.cluster.local:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion)
+                          podman pull image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion) --authfile=/var/lib/containers/storage/registry.json --tls-verify=false
+                          bootc-image-builder --type qcow2 --config /config.toml --local image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion)
                   volumes:
                     - name: config-volume
                       configMap:
@@ -334,7 +334,7 @@ spec:
                 storageClassName: $(params.dataVolumeStorageClass)
               source:
                 http:
-                  url: http://host-$(params.imageName)-qcow2.{{ .Release.Namespace }}.svc.cluster.local:8080/qcow2/disk.qcow2
+                  url: http://host-$(params.imageName)-qcow2.{{ .Release.Namespace }}.svc:8080/qcow2/disk.qcow2
       taskRef:
         kind: Task
         name: manage-k8s-object
