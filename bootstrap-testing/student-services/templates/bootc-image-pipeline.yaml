@@ -24,3 +24,4 @@ spec:
 {{ toYaml .Values.gitSource | nindent 10 }}
         bootcImageBuilderConfig:
 {{ toYaml .Values.bootcImageBuilderConfig | nindent 10 }}
+        pullSecret: '{{ .Values.pullSecret }}'
