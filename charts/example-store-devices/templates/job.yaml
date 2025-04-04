@@ -18,7 +18,6 @@ spec:
             - /bin/bash
             - -c
             - |
-              set -euo pipefail
               FLIGHTCTL_USERNAME=$(cat /tmp/openshift-auth/username)
               FLIGHTCTL_PASSWORD=$(cat /tmp/openshift-auth/password)
               until FLIGHTCTL_API_URL=$(oc get route flightctl-api-route -n open-cluster-management -o go-template='{{ "{{" }}.spec.host{{ "}}" }}') && [ -n "$FLIGHTCTL_API_URL" ]; do
@@ -38,46 +37,54 @@ spec:
 {{- end }}
               )
 
-              # Keep track of which aliases we've already approved
+              TOTAL_DEVICES=${#ALIASES[@]}
+
+              # Track which aliases have been assigned
               declare -A APPROVED_ALIASES
 
-              # Loop until all aliases have been approved
-              while [ "${#APPROVED_ALIASES[@]}" -lt "$TOTAL_DEVICES" ]; do
+              while true; do
                 echo "Checking for pending enrollment requests..."
 
-                # Fetch all pending enrollment requests
-                mapfile -t PENDING_DEVICE_IDS < <(
-                  flightctl get enrollmentrequests 2>/dev/null \
-                  | awk 'NR>1 && $2 == "Pending" { print $1 }'
-                )
+                # Reset the list each loop
+                PENDING_DEVICE_IDS=()
 
-                if [ ${#PENDING_DEVICE_IDS[@]} -eq 0 ]; then
-                  echo "No pending devices found. Retrying in 10 seconds..."
-                  sleep 10
-                  continue
-                fi
+                # Fetch current pending devices
+                while IFS= read -r line; do
+                  STATUS=$(echo "$line" | awk '{print $2}')
+                  if [[ "$STATUS" == "Pending" ]]; then
+                    DEVICE_ID=$(echo "$line" | awk '{print $1}')
+                    PENDING_DEVICE_IDS+=("$DEVICE_ID")
+                  fi
+                done < <(flightctl get enrollmentrequests 2>/dev/null | tail -n +2)
 
-                # Approve each pending request with an unused alias
-                for DEVICE_ID in "${PENDING_DEVICE_IDS[@]}"; do
-                  for ALIAS in "${ALIASES[@]}"; do
-                    if [[ -z "${APPROVED_ALIASES[$ALIAS]+x}" ]]; then
-                      echo "Approving device '$DEVICE_ID' with alias='$ALIAS'..."
-                      flightctl approve -l "alias=${ALIAS}" -l "pos=prod" "enrollmentrequest/${DEVICE_ID}"
-                      APPROVED_ALIASES["$ALIAS"]=true
-                      break
-                    fi
+                if [ "${#PENDING_DEVICE_IDS[@]}" -eq 0 ]; then
+                  echo "No pending devices found."
+                else
+                  for DEVICE_ID in "${PENDING_DEVICE_IDS[@]}"; do
+                    for ALIAS in "${ALIASES[@]}"; do
+                      if [[ -z "${APPROVED_ALIASES[$ALIAS]+x}" ]]; then
+                        echo "Approving device '$DEVICE_ID' with alias '$ALIAS'..."
+                        if flightctl approve -l "alias=${ALIAS}" -l "pos=prod" "enrollmentrequest/${DEVICE_ID}"; then
+                          APPROVED_ALIASES["$ALIAS"]=true
+                        else
+                          echo "Failed to approve device $DEVICE_ID with alias $ALIAS"
+                        fi
+                        break
+                      fi
+                    done
                   done
-                done
+                fi
 
                 echo "Approved devices count: ${#APPROVED_ALIASES[@]}/$TOTAL_DEVICES"
 
-                if [ "${#APPROVED_ALIASES[@]}" -lt "$TOTAL_DEVICES" ]; then
-                  echo "Waiting before checking again..."
-                  sleep 10
+                if [ "${#APPROVED_ALIASES[@]}" -ge "$TOTAL_DEVICES" ]; then
+                  echo "All devices have been approved."
+                  break
                 fi
-              done
 
-              echo "All devices have been approved!"
+                echo "Waiting before checking again..."
+                sleep 10
+              done
           volumeMounts:
             - name: tmp
               mountPath: /tmp
