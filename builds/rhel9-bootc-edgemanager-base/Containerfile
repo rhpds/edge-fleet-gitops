@@ -1,6 +1,15 @@
-FROM registry.redhat.io/rhel9/rhel-bootc:9.5
+FROM registry.redhat.io/openshift4/microshift-bootc-rhel9:v4.18
 
-# Install flightctl agent
+# Unset proxy env vars
+ENV NO_PROXY=
+ENV HTTP_PROXY=
+ENV HTTPS_PROXY=
+
+# Reset dnf
+RUN dnf -y clean all &&\
+    rm -rf /etc/yum.repos.d/unsigned.repo
+
+# Ensure flightctl agent is installed
 RUN dnf -y copr enable @redhat-et/flightctl && \
     dnf -y install flightctl-agent && \
     dnf -y clean all && \
@@ -10,15 +19,29 @@ RUN dnf -y copr enable @redhat-et/flightctl && \
 # Add flightctl agent config
 ADD .flightctl-agent-config/config.yaml /etc/flightctl/
 
+# Ignore registry certs
+ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/999-ocp-internal-registry.conf
+
 # Add registry auth
 ADD .registry-auth/auth.json /usr/lib/container-auth.json
 RUN chmod 0600 /usr/lib/container-auth.json && \
     ln -sr /usr/lib/container-auth.json /etc/ostree/auth.json
 
-# Ignore registry certs
-ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/999-ocp-internal-registry.conf
+# Need a pull secret
+COPY .pull-secret/pull-secret.txt /etc/crio/openshift-pull-secret
 
-# Disable auto-updates
+# MTU magic
+COPY ovn.yaml /etc/microshift/ovn.yaml
+
+# Add registry auth
+ADD .registry-auth/auth.json /usr/lib/container-auth.json
+RUN chmod 0600 /usr/lib/container-auth.json && \
+    ln -sr /usr/lib/container-auth.json /etc/ostree/auth.json
+
+# Disable Microshift in this image
+RUN systemctl mask microshift.service
+
+# Disable auto-updating
 RUN systemctl mask bootc-fetch-apply-updates.timer
 
 # Lint the build
