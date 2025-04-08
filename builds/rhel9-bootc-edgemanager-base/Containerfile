@@ -33,11 +33,6 @@ COPY .pull-secret/pull-secret.txt /etc/crio/openshift-pull-secret
 # MTU magic
 COPY ovn.yaml /etc/microshift/ovn.yaml
 
-# Add registry auth
-ADD .registry-auth/auth.json /usr/lib/container-auth.json
-RUN chmod 0600 /usr/lib/container-auth.json && \
-    ln -sr /usr/lib/container-auth.json /etc/ostree/auth.json
-
 # Disable Microshift in this image
 RUN systemctl mask microshift.service
 
