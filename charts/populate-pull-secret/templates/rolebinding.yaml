@@ -16,7 +16,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: bind-pull-secret-reader
-  namespace: openshift-config-managed
+  namespace: openshift-config
 subjects:
 - kind: ServiceAccount
   name: pull-secret-copier
