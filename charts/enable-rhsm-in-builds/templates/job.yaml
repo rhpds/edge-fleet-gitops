@@ -8,7 +8,7 @@ spec:
       serviceAccountName: secret-copier
       containers:
       - name: copy-secret
-        image: registry.redhat.io/openshift4/ose-cli:latest
+        image: quay.io/jswanson/container-tools:2.0.0
         command:
         - /bin/sh
         - -c
