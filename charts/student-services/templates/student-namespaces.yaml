@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: student-services
+  name: student-namespaces
   namespace: openshift-gitops
   labels:
-    application: student-services
+    application: student-namespaces
 spec:
   destination:
     name: ''
@@ -15,8 +15,12 @@ spec:
     automated: {}
   source:
     repoURL: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
-    targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: bootstrap-testing/student-services/
+    targetRevision: main
+    path: charts/student-namespaces/
     helm:
       values: |
-{{ toYaml .Values | nindent 8 }}
+        studentNamespaces:
+          - student-services
+{{- if .Values.studentNamespaces }}
+{{- toYaml .Values.studentNamespaces | nindent 10 }}
+{{- end }}

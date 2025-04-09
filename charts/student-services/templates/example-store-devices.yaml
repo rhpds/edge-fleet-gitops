@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootc-image-pipeline
+  name: example-store-devices
   namespace: openshift-gitops
   labels:
-    application: bootc-image-pipeline
+    application: example-store-devices
 spec:
   destination:
     name: ''
@@ -17,11 +17,13 @@ spec:
   source:
     repoURL: {{ .Values.gitRepo }}
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/bootc-image-pipeline/
+    path: charts/example-store-devices/
     helm:
+      valueFiles:
+        - values.yaml
       values: |
-        gitSource:
-{{ toYaml .Values.gitSource | nindent 10 }}
-        bootcImageBuilderConfig:
-{{ toYaml .Values.bootcImageBuilderConfig | nindent 10 }}
-        pullSecret: '{{ .Values.pullSecret }}'
+        openshiftAuth:
+{{- with .Values.openshiftAuth }}
+          username: {{ .username }}
+          password: {{ .password }}
+{{- end }}

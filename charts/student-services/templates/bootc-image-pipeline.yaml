@@ -2,25 +2,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: student-namespaces
+  name: bootc-image-pipeline
   namespace: openshift-gitops
   labels:
-    application: student-namespaces
+    application: bootc-image-pipeline
 spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
+    namespace: student-services
   project: default
   syncPolicy:
     automated: {}
   source:
     repoURL: {{ .Values.gitRepo }}
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/student-namespaces/
+    path: charts/bootc-image-pipeline/
     helm:
-      values: |
-        studentNamespaces:
-          - student-services
-{{- if .Values.studentNamespaces }}
-{{- toYaml .Values.studentNamespaces | nindent 10 }}
-{{- end }}
+      valueFiles:
+        - values.yaml

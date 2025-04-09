@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: student-virtual-machines
+  name: build-bootc-images
   namespace: openshift-gitops
   labels:
-    application: student-virtual-machines
+    application: build-bootc-images
 spec:
   destination:
     name: ''
@@ -17,10 +17,9 @@ spec:
   source:
     repoURL: {{ .Values.gitRepo }}
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/student-virtual-machines/
+    path: charts/build-bootc-images/
     helm:
-      values: |
-        students:
-{{- toYaml .Values.students | nindent 10 }}
-        virtualMachines:
-{{- toYaml .Values.virtualMachines | nindent 10 }}
+      valueFiles:
+        - values.yaml
+            
+

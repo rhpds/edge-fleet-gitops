@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: build-flightctl-cli
+  name: student-virtual-machines
   namespace: openshift-gitops
   labels:
-    application: build-flightctl-cli
+    application: student-virtual-machines
 spec:
   destination:
     name: ''
@@ -17,8 +17,13 @@ spec:
   source:
     repoURL: {{ .Values.gitRepo }}
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/build-flightctl-cli/
+    path: charts/student-virtual-machines/
     helm:
+      valueFiles:
+        - values.yaml
       values: |
-        gitSource:
-{{ toYaml .Values.gitSource | nindent 10 }}
+        students:
+{{- $userCount := int .Values.user.count }}
+{{- range $index := until $userCount }}
+          - user: {{ $.Values.user.prefix }}{{ add $index 1}}
+{{- end }}
