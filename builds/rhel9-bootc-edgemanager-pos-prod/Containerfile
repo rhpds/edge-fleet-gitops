@@ -24,8 +24,10 @@ COPY point-of-sale.yaml /etc/containers/systemd/point-of-sale.yaml
 
 # Install podman-compose
 RUN dnf -y install python3-pip && \
-    pip3 install podman-compose && \
-    systemctl enable podman.service
+    dnf -y clean all && \
+    rm -rf /var/cache/dnf/*
+RUN pip3 install podman-compose
+RUN systemctl enable podman.service
 
 # Disable auto-updates
 RUN systemctl mask bootc-fetch-apply-updates.timer
