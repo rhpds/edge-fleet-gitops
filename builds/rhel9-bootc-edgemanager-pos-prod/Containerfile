@@ -22,6 +22,14 @@ ADD ocp-internal-registry.conf /etc/containers/registries.conf.d/999-ocp-interna
 COPY point-of-sale.kube /etc/containers/systemd/point-of-sale.kube
 COPY point-of-sale.yaml /etc/containers/systemd/point-of-sale.yaml
 
+# Install podman-compose
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+    dnf -y clean all && \
+    rm -rf /var/cache/dnf/*
+RUN dnf -y install podman-compose && \
+dnf -y clean all && \
+rm -rf /var/cache/dnf/*
+
 # Disable auto-updates
 RUN systemctl mask bootc-fetch-apply-updates.timer
 
