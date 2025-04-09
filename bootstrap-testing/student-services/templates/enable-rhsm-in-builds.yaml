@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: emable-rhsm-in-builds
+  name: enable-rhsm-in-builds
   namespace: openshift-gitops
   labels:
-    application: emable-rhsm-in-builds
+    application: enable-rhsm-in-builds
 spec:
   destination:
     name: ''
@@ -17,5 +17,5 @@ spec:
   source:
     repoURL: {{ .Values.gitRepo }}
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/emable-rhsm-in-builds/
+    path: charts/enable-rhsm-in-builds/
     helm:
