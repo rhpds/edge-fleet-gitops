@@ -23,10 +23,14 @@ COPY point-of-sale.kube /etc/containers/systemd/point-of-sale.kube
 COPY point-of-sale.yaml /etc/containers/systemd/point-of-sale.yaml
 
 # Install podman-compose
-RUN dnf -y install python3-pip && \
+RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
     dnf -y clean all && \
     rm -rf /var/cache/dnf/*
-RUN pip3 install podman-compose
+RUN rm /etc/rhsm-host
+RUN dnf -y install podman-compose && \
+    dnf -y clean all && \
+    rm -rf /var/cache/dnf/* && \
+    rm -rf /etc/rhsm
 RUN systemctl enable podman.service
 
 # Disable auto-updates

@@ -72,6 +72,14 @@ spec:
                 type: Docker
                 dockerStrategy:
                   dockerfilePath: $(params.containerfilePath)
+                  volumes:
+                  - name: etc-pki-entitlement
+                    mounts:
+                    - destinationPath: /etc/pki/entitlement
+                    source:
+                      type: Secret
+                      secret:
+                        secretName: etc-pki-entitlement
               source:
                 type: Git
                 git:
