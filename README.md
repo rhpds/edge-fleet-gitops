@@ -16,6 +16,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Registry Auth | Creates a configmap with a registry auth file, useful for builds later on | `charts/registry-auth/` | None required |
 | Student Namespaces | Creates a shared namespace called `student-services`, and optionally creates namespaces for students according to a provided list | `charts/student-namespaces/` | [Example Values](./charts/student-namespaces/example-values.yaml) |
 | Student Virtual Machines | Creates virtual machines and supporting resources for students | `charts/student-virtual-machines/` | [Example Values](./charts/student-virtual-machines/example-values.yaml) |
+| Enable RHSM in Builds | Copies the RHSM secret from the ocp-managed namespace to other namespaces for running builds with RHSM in them | `charts/enable-rhsm-in-builds/` | None required |
 
 ## Input Values
 The following is an example of all values required by all charts to deploy, as an example:
