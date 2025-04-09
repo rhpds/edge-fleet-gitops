@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: emable-rhsm-in-builds
+  namespace: openshift-gitops
+  labels:
+    application: emable-rhsm-in-builds
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+    namespace: student-services
+  project: default
+  syncPolicy:
+    automated: {}
+  source:
+    repoURL: {{ .Values.gitRepo }}
+    targetRevision: {{ .Values.gitBranch | default "main" }}
+    path: charts/emable-rhsm-in-builds/
+    helm:
