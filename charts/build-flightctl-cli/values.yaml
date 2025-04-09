@@ -1,0 +1,4 @@
+---
+gitSource:
+  url: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+  ref: main

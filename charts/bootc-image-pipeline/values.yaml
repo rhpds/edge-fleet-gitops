@@ -1,0 +1,7 @@
+---
+gitSource:
+  url: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+  ref: main
+bootcImageBuilderConfig:
+  username: ansible
+  password: summit2025
