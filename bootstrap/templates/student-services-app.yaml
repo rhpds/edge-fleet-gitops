@@ -25,5 +25,5 @@ spec:
         students:
 {{- $userCount := int .Values.user.count }}
 {{- range $index := until $userCount }}
-          - {{ $.Values.user.prefix }}{{ add $index 1}}
+          - wksp-user{{ add $index 1}}
 {{- end }}     
