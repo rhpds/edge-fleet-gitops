@@ -19,6 +19,7 @@ spec:
     path: charts/student-services/
     helm:
       values: |
+        numberStudents: {{ .Values.user.count }}
         openshiftAuth:
           username: admin
           password: {{ .Values.common_password }}
