@@ -23,4 +23,4 @@ spec:
         - values.yaml
       values: |
         students:
-{{-toYaml .Values.students | nindent 10 }}
+{{- toYaml .Values.students | nindent 10 }}
