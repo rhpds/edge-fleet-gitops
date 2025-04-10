@@ -19,6 +19,7 @@ The `charts/` directory contains charts that deploy resources for students and s
 | Enable RHSM in Builds | Copies the RHSM secret from the ocp-managed namespace to other namespaces for running builds with RHSM in them | `charts/enable-rhsm-in-builds/` | None required |
 | Populate Pull Secret | Copies the cluster pull secret into a secret in the chart's deployment namespace | `charts/populate-pull-secret/` | None requied |
 | Update Web Terminal | Updates the DevWorkspaceTemplate used by the terminal in the web console to use a custom image | `charts/update-web-terminal/` | [Example Values](./charts/update-web-terminal/example-values.yaml) |
+| Flightctl RBAC | Creates a rolebinding so students are admins in flightctl | `charts/flightctl-rbac/` | [Example Values](./charts/flightctl-rbac/example-values.yaml) |
 
 ## Input Values
 The following is an example of all values required by all charts to deploy, as an example:
