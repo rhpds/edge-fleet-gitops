@@ -15,7 +15,7 @@ spec:
     automated:
       selfHeal: true
   source:
-    repoURL: {{ .Values.gitRepo }}
+    repoURL: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
     targetRevision: {{ .Values.gitBranch | default "main" }}
     path: charts/acm-rhem/
     helm:
