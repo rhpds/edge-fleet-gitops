@@ -23,7 +23,4 @@ spec:
         - values.yaml
       values: |
         students:
-{{- $userCount := int .Values.user.count }}
-{{- range $index := until $userCount }}
-          - {{ $.Values.user.prefix }}{{ add $index 1}}
-{{- end }}
+{{-toYaml .Values.students | nindent 10 }}
