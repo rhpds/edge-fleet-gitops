@@ -18,5 +18,5 @@ spec:
             - /bin/sh
             - -c
             - |
-              oc patch consoles.operator.openshift.io cluster --type='merge' -p '{"spec":{"plugins":["flightctl-plugin", "kubevirt-plugin", "acm-console"]}}'
+              oc patch consoles.operator.openshift.io cluster --type='merge' -p '{"spec":{"plugins":["flightctl-plugin", "kubevirt-plugin", "acm"]}}'
               # No idea why the virt plugin gets turned off
