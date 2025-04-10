@@ -10,7 +10,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: student-services
+    namespace: openshift-operators
   project: default
   syncPolicy:
     automated: {}
