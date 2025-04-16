@@ -1,4 +1,4 @@
-FROM registry.redhat.io/rhel9/rhel-bootc:9.5
+FROM quay.io/jswanson/rhel-bootc-flightctl-agent:9.5
 
 # Install flightctl agent
 RUN rm -f /etc/rhsm-host
