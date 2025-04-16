@@ -12,6 +12,9 @@ FROM quay.io/jswanson/rhel-bootc-flightctl-agent:9.5
 # Add flightctl agent config
 ADD .flightctl-agent-config/config.yaml /etc/flightctl/
 
+# Ensure flightctl-agent starts
+RUN systemctl enable flightctl-agent
+
 # Add registry auth
 ADD .registry-auth/auth.json /usr/lib/container-auth.json
 RUN chmod 0600 /usr/lib/container-auth.json && \
