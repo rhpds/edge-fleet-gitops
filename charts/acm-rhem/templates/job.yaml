@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: enable-flightctl-console-plugin
-  namespace: student-services
+  namespace: open-cluster-management
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:

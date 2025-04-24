@@ -10,4 +10,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: console-patch-sa
-    namespace: student-services
+    namespace: open-cluster-management
