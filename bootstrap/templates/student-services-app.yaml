@@ -22,7 +22,7 @@ spec:
         numberStudents: {{ .Values.user.count }}
         openshiftAuth:
           username: admin
-          password: {{ .Values.common_password }}
+          password: {{ .Values.admin_password }}
         students:
 {{- $userCount := int .Values.user.count }}
 {{- range $index := until $userCount }}
