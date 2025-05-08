@@ -15,10 +15,10 @@ echo "Turning off auto-sync on parent app..."
 oc patch application.argoproj.io/student-services -n openshift-gitops --type=json -p '[{"op": "remove", "path": "/spec/syncPolicy/automated"}]'
 
 echo "Deleting some projects..."
-argocd app delete openshift-gitops/registry-auth --cascade --yes --grpc-web
-argocd app delete openshift-gitops/student-virtual-machines --cascade --yes --grpc-web
-argocd app delete openshift-gitops/example-store-devices --cascade --yes --grpc-web
-argocd app delete openshift-gitops/build-bootc-images --cascade --yes --grpc-web
+argocd app delete openshift-gitops/registry-auth --cascade --yes --grpc-web --wait
+argocd app delete openshift-gitops/student-virtual-machines --cascade --yes --grpc-web --wait
+argocd app delete openshift-gitops/example-store-devices --cascade --yes --grpc-web --wait
+argocd app delete openshift-gitops/build-bootc-images --cascade --yes --grpc-web --wait
 
 echo "Cleaning up existing image resources..."
 oc delete ImageStreamTag rhel9-bootc-edgemanager-base:1.0.0 rhel9-bootc-edgemanager-pos-prod:1.0.0 -n student-services
