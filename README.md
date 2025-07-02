@@ -25,10 +25,10 @@ The `charts/` directory contains charts that deploy resources for students and s
 The following is an example of all values required by all charts to deploy, as an example:
 ```yaml
 ---
-gitRepo: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+gitRepo: https://github.com/rhpds/edge-fleet-gitops.git
 
 gitSource:
-  url: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+  url: https://github.com/rhpds/edge-fleet-gitops.git
   ref: main
 
 advancedClusterManagement:
@@ -59,7 +59,7 @@ bootcImages:
   - name: rhel9-bootc-edgemanager-base
     version: 1.0.0
     containerfilesDirectory: builds/rhel9-bootc-edgemanager-base
-    gitRepo: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+    gitRepo: https://github.com/rhpds/edge-fleet-gitops.git
     gitRef: main
     containerfilePath: Containerfile
     dataVolumeStorageClass: ocs-external-storagecluster-ceph-rbd-immediate
@@ -68,7 +68,7 @@ bootcImages:
   - name: rhel9-bootc-edgemanager-pos-prod
     version: 1.0.0
     containerfilesDirectory: builds/rhel9-bootc-edgemanager-pos-prod
-    gitRepo: https://github.com/rhpds/lb2517-edge-fleet-gitops.git
+    gitRepo: https://github.com/rhpds/edge-fleet-gitops.git
     gitRef: main
     containerfilePath: Containerfile
     dataVolumeStorageClass: ocs-external-storagecluster-ceph-rbd-immediate
