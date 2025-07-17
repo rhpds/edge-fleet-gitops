@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: pos-prod
-    image: quay.io/jswanson/pos-v1-prod:1.0.0
+    image: quay.io/rhpds/pos-v1-prod:1.0.0
     ports:
       - containerPort: 8080
