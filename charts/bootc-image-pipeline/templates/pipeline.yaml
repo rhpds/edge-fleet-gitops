@@ -179,7 +179,7 @@ spec:
                   serviceAccountName: bib-sa
                   initContainers:
                     - name: prep-for-bib
-                      image: quay.io/jswanson/container-tools:1.0.0
+                      image: quay.io/rhpds/container-tools:1.0.0
                       securityContext:
                         privileged: true
                       volumeMounts:
@@ -212,7 +212,7 @@ spec:
                           mountPath: /var/lib/containers/storage
                       command:
                         - /bin/bash
-                        - -c 
+                        - -c
                         - |
                           podman pull image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion) --authfile=/var/lib/containers/storage/registry.json --tls-verify=false
                           bootc-image-builder --type qcow2 --config /config.toml --local image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/$(params.imageName):$(params.imageVersion)

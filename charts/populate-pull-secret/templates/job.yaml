@@ -8,7 +8,7 @@ spec:
       serviceAccountName: pull-secret-copier
       containers:
       - name: copy-pull-secret
-        image: quay.io/jswanson/container-tools:2.0.0
+        image: quay.io/rhpds/container-tools:2.0.0
         command:
         - /bin/bash
         - -c

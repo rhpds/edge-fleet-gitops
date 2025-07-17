@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: point-of-sale
-        image: quay.io/jswanson/pos-v1-prod:1.0.0
+        image: quay.io/rhpds/pos-v1-prod:1.0.0
         ports:
           - containerPort: 8080
-      
