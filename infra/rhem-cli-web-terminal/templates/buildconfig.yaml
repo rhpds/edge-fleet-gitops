@@ -17,5 +17,6 @@ spec:
   source:
     type: Dockerfile
     configMaps:
-      - configMap: build-from-image
+      - configMap:
+          name: build-from-image
         destinationDir: '.'
