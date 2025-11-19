@@ -1,6 +1,6 @@
 ---
-kind: BuildConfig
 apiVersion: build.openshift.io/v1
+kind: BuildConfig
 metadata:
   name: rhem-cli-web-terminal
   annotations:
@@ -18,4 +18,4 @@ spec:
     type: Dockerfile
     configMaps:
       - configMap: build-from-image
-        destinationDir: "."
+        destinationDir: '.'
