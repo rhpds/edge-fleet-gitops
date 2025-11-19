@@ -5,4 +5,4 @@ metadata:
   name: rhem-cli-web-terminal
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-    imageregistry.openshift.io/public-visibility: true
+    imageregistry.openshift.io/public-visibility: 'true'
