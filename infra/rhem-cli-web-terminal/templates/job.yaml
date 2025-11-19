@@ -10,6 +10,7 @@ spec:
   template:
     spec:
       serviceAccountName: patch-web-terminal-tooling
+      restartPolicy: OnFailure
       containers:
         - name: patcher
           image: registry.redhat.io/openshift4/ose-cli:latest
