@@ -1,5 +1,53 @@
 # ci-template-gitops
 
+## Deployment
+```mermaid
+flowchart TD
+  root["RHDP Provisioner"]
+
+  subgraph BOOTSTRAP["BOOTSTRAP"]
+    bootstrap["chart: bootstrap (location: bootstrap/)"]
+  end
+
+  subgraph INFRA["INFRA"]
+    infra-bootstrap["chart: infra-bootstrap (location: infra/bootstrap/)"]
+    bastion["chart: bastion (location: infra/bastion)"]
+    rhem-cli-web-terminal["chart: rhem-cli-web-terminal (location: infra/rhem-cli-web-terminal)"]
+    aerial-app-imagestream["chart: aerial-app-imagestream (location: infra/aerial-app-imagestream)"]
+    janitor["chart: janitor (location: infra/janitor)"]
+
+    infra-bootstrap --> bastion
+    infra-bootstrap --> rhem-cli-web-terminal
+  end
+
+  infraNote{{Note: Static after provisioning}}:::note
+  infraNote -.-> infra-bootstrap
+
+  subgraph USER["USER"]
+    user-bootstrap["chart: user-bootstrap (path: user/bootstrap/)"]
+    rhem["chart: rhem (path: user/rhem)"]
+    rhem-virtual-machine["chart: rhem-virtual-machine (path: user/rhem-virtual-machine)"]
+    image-builder-virtual-machine["chart: image-builder-virtual-machine (path: user/image-builder-virtual-machine)"]
+    drone-imagestream["chart: drone-imagestream (path: user/drone-imagestream)"]
+    drone-virtual-machine-template["chart: drone-virtual-machine-template (path: user/drone-virtual-machine-template)"]
+    gitops-repository["chart: gitops-respository (path: user/gitops-repository)"]
+
+    user-bootstrap --> rhem
+    user-bootstrap --> rhem-virtual-machine
+    user-bootstrap --> image-builder-virtual-machine
+    user-bootstrap --> drone-imagestream
+    user-bootstrap --> drone-virtual-machine-template
+    user-bootstrap --> gitops-repository
+  end
+
+  userNote{{Note: Dynamic based on users}}:::note
+  userNote -.-> user-bootstrap
+
+  root --> bootstrap
+  bootstrap --> infra-bootstrap
+  bootstrap --> user-bootstrap
+```
+
 ## Charts
 The `charts/` directory contains charts that deploy resources for students and shared resources. The following table calls out the charts and their documentation.
 
