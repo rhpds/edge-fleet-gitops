@@ -1,0 +1,21 @@
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: rhem-cli-web-terminal
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'rhem-cli-web-terminal:latest'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Containerfile
+  source:
+    type: Dockerfile
+    configMaps:
+      - configMap: build-from-image
+        destinationDir: "."
