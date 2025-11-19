@@ -15,7 +15,7 @@ spec:
     dockerStrategy:
       dockerfilePath: Containerfile
   source:
-    type: Dockerfile
+    type: Binary
     configMaps:
       - configMap:
           name: build-from-image
