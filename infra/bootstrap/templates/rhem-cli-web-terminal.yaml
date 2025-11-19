@@ -18,5 +18,5 @@ spec:
   source:
     repoURL: https://github.com/rhpds/edge-fleet-gitops.git
     targetRevision: {{ .Values.gitBranch | default "main" }}
-    path: charts/rhem-cli-web-terminal/
+    path: infra/rhem-cli-web-terminal/
     helm:
