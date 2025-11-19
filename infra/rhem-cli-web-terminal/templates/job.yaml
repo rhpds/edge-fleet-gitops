@@ -18,7 +18,7 @@ spec:
             - -c
             - |
               echo "Getting current web terminal image..."
-              IMAGE=$(oc get devworkspacetemplate web-terminal-tooling -n openshift-operators -o go-template="{{ (index .spec.components 0).container.image }}")
+              IMAGE=$(oc get devworkspacetemplate web-terminal-tooling -n openshift-operators -o go-template='{{ "{{" }} (index .spec.components 0).container.image {{ "}}" }}')
               echo "Current image: $IMAGE"
               echo "Create Containerfile for image build..."
               echo "---
