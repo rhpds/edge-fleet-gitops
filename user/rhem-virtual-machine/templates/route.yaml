@@ -1,0 +1,26 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rhem-on-rhel-webui
+spec:
+  to:
+    kind: Service
+    name: rhem-on-rhel-webui
+  port:
+    targetPort: webui
+  tls:
+    termination: passthrough
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rhem-on-rhel-api
+spec:
+  to:
+    kind: Service
+    name: rhem-on-rhel-api
+  port:
+    targetPort: api
+  tls:
+    termination: edge

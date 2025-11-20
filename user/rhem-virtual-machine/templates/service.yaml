@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rhem-on-rhel-webui
+spec:
+  selector:
+    kubevirt.io/domain: rhem-virtual-machine
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+      name: webui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rhem-on-rhel-api
+spec:
+  selector:
+    kubevirt.io/domain: rhem-virtual-machine
+  ports:
+    - protocol: TCP
+      port: 6443
+      targetPort: 6443
+      name: api
