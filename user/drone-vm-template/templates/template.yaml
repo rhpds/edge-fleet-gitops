@@ -139,7 +139,7 @@ objects:
 parameters:
   - name: NAME
     description: VM name
-    name: '{{ .Values.user }}-drone-virtual-machine'
+    value: '{{ .Values.user }}-drone-virtual-machine'
   - name: DATA_SOURCE_NAME
     description: Name of the DataSource to clone
     value: '{{ .Values.user }}-drone-virtual-machine'
