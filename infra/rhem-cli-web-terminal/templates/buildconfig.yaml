@@ -3,20 +3,20 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: rhem-cli-web-terminal
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'rhem-cli-web-terminal:latest'
+      name: rhem-cli-web-terminal:latest
+
   strategy:
     type: Docker
-    dockerStrategy:
-      dockerfilePath: Containerfile
+
   source:
-    type: Binary
-    configMaps:
-      - configMap:
-          name: build-from-image
-        destinationDir: '.'
+    type: Dockerfile
+    dockerfile: |
+      ARG BASE_IMAGE
+      FROM ${BASE_IMAGE}
+      USER 0
+      RUN curl -L https://github.com/flightctl/flightctl/releases/download/v0.10.0/flightctl-linux-amd64 --output /usr/local/bin/flightctl
+      RUN chmod +x /usr/local/bin/flightctl
