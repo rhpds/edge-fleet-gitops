@@ -57,8 +57,8 @@ spec:
             - /bin/sh
             - -c
             - |
-              mkdir empty
-              oc start-build rhem-cli-web-terminal --from-dir=empty --wait
+              mkdir /tmp/empty
+              oc start-build rhem-cli-web-terminal --from-dir=/tmp/empty --wait
       restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
