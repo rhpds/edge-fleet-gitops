@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/rhpds/edge-fleet-gitops.git
     targetRevision: rh1-2026
-    path: user/dronve-vm-template/
+    path: user/drone-vm-template/
     helm:
       values: |
         gitBranch: rh1-2026
