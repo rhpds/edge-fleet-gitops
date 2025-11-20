@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: {{ .Values.user }}-drone
+  name: {{ .Values.user }}-drone-virtual-machine
   namespace: openshift
   labels:
     flavor.template.kubevirt.io/small: 'true'
@@ -139,7 +139,6 @@ objects:
 parameters:
   - name: NAME
     description: VM name
-    generate: expression
     name: '{{ .Values.user }}-drone-virtual-machine'
   - name: DATA_SOURCE_NAME
     description: Name of the DataSource to clone
