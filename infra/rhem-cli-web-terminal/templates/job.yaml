@@ -53,7 +53,7 @@ spec:
       containers:
         - name: build
           image: registry.redhat.io/openshift4/ose-cli:latest
-          command: ["oc",  "start-build", "rhem-cli-web-terminal", "--from-file .", "--wait"]
+          command: ["oc",  "start-build", "rhem-cli-web-terminal", "--from-dir",  ".", "--wait"]
       restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
