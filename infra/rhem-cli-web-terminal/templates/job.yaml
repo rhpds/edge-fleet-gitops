@@ -28,11 +28,7 @@ spec:
               metadata:
                 name: build-from-image
               data:
-                Containerfile: |
-                  FROM $IMAGE
-                  USER 0
-                  RUN curl -L https://github.com/flightctl/flightctl/releases/download/v0.10.0/flightctl-linux-amd64 --output /usr/local/bin/flightctl
-                  RUN chmod +x /usr/local/bin/flightctl" > /tmp/configmap.yaml
+                BASE_IMAGE: $IMAGE" > /tmp/configmap.yaml
               echo "Printing out configmap..."
               cat /tmp/configmap.yaml
               echo "Applying configmap..."
@@ -57,8 +53,13 @@ spec:
             - /bin/sh
             - -c
             - |
-              mkdir /tmp/empty
-              oc start-build rhem-cli-web-terminal --from-dir=/tmp/empty --wait
+              oc start-build rhem-cli-web-terminal --build-arg BASE_IMAGE=$BASE_IMAGE --wait
+          env:
+            - name: BASE_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: build-from-image
+                  key: BASE_IMAGE
       restartPolicy: OnFailure
 ---
 apiVersion: batch/v1
