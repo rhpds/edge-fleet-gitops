@@ -3,4 +3,5 @@ apiVersion: v2
 name: image-builder-virtual-machine
 description: > 
   This chart creates a virtual machine for students to build bootc images and assists in the importing into OpenShift Virtualization
+version: 1.0.0
 appVersion: "1.0.0"
