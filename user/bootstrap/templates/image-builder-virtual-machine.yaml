@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.username }}-image-builder-virtual-machine
+  namespace: openshift-gitops
+  labels:
+    application: infra-bootstrap
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+    namespace: wksp-{{ .Values.username }}
+  project: default
+  syncPolicy:
+    automated: {}
+  source:
+    repoURL: https://github.com/rhpds/edge-fleet-gitops.git
+    targetRevision: rh1-2026
+    path: user/image-builder-virtual-machine/
+    helm:
+      values: |
+        gitBranch: rh1-2026
+        rhemVirtualMachine:
+          password: replacemelater
