@@ -83,7 +83,7 @@ spec:
               echo "Patching DevWorkspaceTemplate..."
               oc patch devworkspacetemplate web-terminal-tooling \
                 --type='json' \
-                -p='[{"op": "replace", "path": "/spec/components/0/container/image", "value": "rhem-cli-web-terminal:latest"}]' && \
+                -p='[{"op": "replace", "path": "/spec/components/0/container/image", "value": "image-registry.openshift-image-registry.svc:5000/openshift-operators/rhem-cli-web-terminal"}]' && \
               oc annotate devworkspacetemplate web-terminal-tooling \
                 web-terminal.redhat.com/unmanaged-state=true --overwrite
               echo "Deleting existing DevWorkspaces..."
