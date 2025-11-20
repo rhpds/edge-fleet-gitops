@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: {{ .Values.user }}-drone-virtual-machine
+  name: {{ .Values.user }}-drone
   namespace: openshift
   labels:
     flavor.template.kubevirt.io/small: 'true'
