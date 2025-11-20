@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.username }}-rhem-virtual-machine
   namespace: openshift-gitops
   labels:
-    application: infra-bootstrap
+    application: {{ .Values.username }}-rhem-virtual-machine
 spec:
   destination:
     name: ''
