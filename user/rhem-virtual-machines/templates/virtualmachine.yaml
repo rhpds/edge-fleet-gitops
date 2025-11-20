@@ -1,0 +1,82 @@
+---
+apiVersion: 'kubevirt.io/v1'
+kind: 'VirtualMachine'
+metadata:
+  annotations:
+    vm.kubevirt.io/validations: "[\n  {\n    \"name\": \"minimal-required-memory\",\n    \"path\": \"jsonpath::.spec.domain.memory.guest\",\n    \"rule\": \"integer\",\n    \"message\": \"This VM requires more memory.\",\n    \"min\": 1610612736\n  }\n]\n"
+  generation: 1
+  labels:
+    app: 'rhem-virtual-machine'
+    kubevirt.io/dynamic-credentials-support: 'true'
+    vm.kubevirt.io/template: 'rhel9-server-small'
+    vm.kubevirt.io/template.namespace: 'openshift'
+    vm.kubevirt.io/template.revision: '1'
+    vm.kubevirt.io/template.version: 'v0.34.1'
+  name: 'rhem-virtual-machine'
+spec:
+  dataVolumeTemplates:
+    - apiVersion: 'cdi.kubevirt.io/v1beta1'
+      kind: 'DataVolume'
+      metadata:
+        name: 'rhem-virtual-machine'
+      spec:
+        sourceRef:
+          kind: 'DataSource'
+          name: 'rhel9'
+          namespace: 'openshift-virtualization-os-images'
+        storage:
+          resources:
+            requests:
+              storage: '70Gi'
+  runStrategy: 'RerunOnFailure'
+  template:
+    metadata:
+      annotations:
+        vm.kubevirt.io/flavor: 'small'
+        vm.kubevirt.io/os: 'rhel9'
+        vm.kubevirt.io/workload: 'server'
+      labels:
+        kubevirt.io/domain: 'rhem-virtual-machine'
+        kubevirt.io/size: 'small'
+    spec:
+      architecture: 'amd64'
+      domain:
+        cpu:
+          cores: 1
+          sockets: 4
+          threads: 1
+        devices:
+          disks:
+            - disk:
+                bus: 'virtio'
+              name: 'rootdisk'
+            - disk:
+                bus: 'virtio'
+              name: 'cloudinitdisk'
+          interfaces:
+            - masquerade: {}
+              model: 'virtio'
+              name: 'default'
+          rng: {}
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
+        machine:
+          type: 'pc-q35-rhel9.6.0'
+        memory:
+          guest: '4Gi'
+      networks:
+        - name: 'default'
+          pod: {}
+      terminationGracePeriodSeconds: 180
+      volumes:
+        - dataVolume:
+            name: 'rhem-virtual-machine'
+          name: 'rootdisk'
+        - cloudInitNoCloud:
+            userData: "#cloud-config\nuser: cloud-user\npassword: {{ .Values.rhemVirtualMachine.password }}\nchpasswd: { expire: False }"
+          name: 'cloudinitdisk'
