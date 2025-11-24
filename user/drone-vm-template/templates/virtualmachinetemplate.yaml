@@ -30,7 +30,6 @@ metadata:
       /objects[0].spec.template.spec.networks
     name.os.template.kubevirt.io/rhel9.2: Red Hat Enterprise Linux 9.0 or higher
     template.openshift.io/bindable: 'false'
-    openshift.kubevirt.io/pronounceable-suffix-for-name-expression: 'true'
     name.os.template.kubevirt.io/rhel9.3: Red Hat Enterprise Linux 9.0 or higher
     name.os.template.kubevirt.io/rhel9.4: Red Hat Enterprise Linux 9.0 or higher
     tags: 'hidden,kubevirt,virtualmachine,linux,rhde'
