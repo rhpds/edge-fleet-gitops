@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/version: 4.20.0
     template.kubevirt.io/type: base
     app.kubernetes.io/name: common-templates
-    workload.template.kubevirt.io/server: 'true'
   annotations:
     template.kubevirt.io/provider: Red Hat Edge BU
     template.kubevirt.io/provider-url: 'https://www.redhat.com/en/products/edge'
