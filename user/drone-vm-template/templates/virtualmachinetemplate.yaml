@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.user }}-drone-virtual-machine
   namespace: openshift
   labels:
-    template.kubevirt.io/version: v0.31.1
+    template.kubevirt.io/version: v0.34.1
     app.kubernetes.io/version: 4.20.0
     template.kubevirt.io/type: base
     app.kubernetes.io/name: common-templates
