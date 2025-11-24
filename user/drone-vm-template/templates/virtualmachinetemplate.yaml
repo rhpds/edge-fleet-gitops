@@ -40,6 +40,7 @@ metadata:
     openshift.io/support-url: 'https://github.com/kubevirt/common-templates/issues'
     iconClass: icon-rhel
     openshift.io/provider-display-name: Red Hat Edge BU
+    template.kubevirt.io/architecture: amd64
 objects:
   - apiVersion: kubevirt.io/v1
     kind: VirtualMachine
