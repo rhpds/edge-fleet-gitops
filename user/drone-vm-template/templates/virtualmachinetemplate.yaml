@@ -41,6 +41,15 @@ metadata:
     iconClass: icon-rhel
     openshift.io/provider-display-name: Red Hat Edge BU
     template.kubevirt.io/architecture: amd64
+    os.template.kubevirt.io/rhel9.0: 'true'
+    os.template.kubevirt.io/rhel9.1: 'true'
+    os.template.kubevirt.io/rhel9.2: 'true'
+    os.template.kubevirt.io/rhel9.3: 'true'
+    os.template.kubevirt.io/rhel9.4: 'true'
+    os.template.kubevirt.io/rhel9.5: 'true'
+    os.template.kubevirt.io/rhel9.6: 'true'
+    workload.template.kubevirt.io/server: 'true'
+    os.template.kubevirt.io/rhel9.7: 'true'
 objects:
   - apiVersion: kubevirt.io/v1
     kind: VirtualMachine
