@@ -24,3 +24,16 @@ spec:
       port: 6443
       targetPort: 6443
       name: api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-webui
+spec:
+  selector:
+    kubevirt.io/domain: rhem-virtual-machine
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      name: webui
