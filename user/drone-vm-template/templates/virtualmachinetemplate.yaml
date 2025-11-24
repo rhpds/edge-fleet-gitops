@@ -143,13 +143,13 @@ objects:
 parameters:
   - name: NAME
     description: VM name
-    value: '{{ .Values.user }}-drone-virtual-machine'
+    value: 'drone-virtual-machine'
   - name: DATA_SOURCE_NAME
     description: Name of the DataSource to clone
-    value: '{{ .Values.user }}-drone-virtual-machine'
+    value: 'drone-virtual-machine'
   - name: DATA_SOURCE_NAMESPACE
     description: Namespace of the DataSource
-    value: openshift-virtualization-os-images
+    value: "wksp-{{ .Values.user }}"
   - name: CLOUD_USER_PASSWORD
     description: Randomized password for the cloud-init user cloud-user
     generate: expression
