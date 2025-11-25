@@ -13,6 +13,7 @@ data:
           ansible_user: admin
           ansible_password: changemelater
           ansible_host: bastion-ssh.bastion.svc.cluster.local
+          ansible_become: true
 
   playbook.yaml: |
     ---
@@ -20,8 +21,6 @@ data:
       hosts:
         - all
       gather_facts: false
-      vars_files:
-        - /runner/variables.yaml
       pre_tasks:
         - name: Wait for VM to be up
           ansible.builtin.wait_for_connection:
@@ -29,11 +28,39 @@ data:
       tasks:
         - name: Create user account
           ansible.builtin.user:
-            name: "{{ student.username }}"
+            name: "{{ .Values.tenant }}"
             create_home: true
             generate_ssh_key: true
-            password: "{{ student.password | password_hash('sha512', 'rhem') }}"
+            password: "{{- "{{" }} '{{ .Values.bastionSshPassword }}' | password_hash('sha512', 'rhem') {{ "}}" }}"
             state: present
+        - name: Create MOTD folder
+          ansible.builtin.file:
+            path: /etc/motd.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
+        - name: Create MOTD file for {{ .Values.tenant }}
+          ansible.builtin.copy:
+            content: |
+              ##############################################
+              #  MOTD for user: {{ .Values.tenant }}
+              ##############################################
+
+              Hello {{ .Values.tenant }}!
+
+              Your RHEM virtual machine is available at: rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local
+              
+              Use the following credentials:
+              Username: {{ .Values.tenant }}
+              Password: {{ .Values.bastionSshPassword }}
+
+              To connect, use the following command:
+              ssh {{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local
+            dest: /etc/motd.d/10-motd-{{ .Values.tenant }}
+            owner: root
+            group: root
+            mode: '0644'
   
   ansible.cfg: |
     [defaults]
