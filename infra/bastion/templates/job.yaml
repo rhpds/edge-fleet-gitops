@@ -20,7 +20,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: run-ansible-playbook
-          image: quay.io/jswanson/sps-ee:2025
+          image: quay.io/jswanson/general-ansible-ee:rh1-2026
           command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vvvvv"]
           volumeMounts:
             - name: inventory
