@@ -33,34 +33,31 @@ data:
             generate_ssh_key: true
             password: "{{- "{{" }} '{{ .Values.bastionSshPassword }}' | password_hash('sha512', 'rhem') {{ "}}" }}"
             state: present
-        - name: Create MOTD folder
+        - name: Remove other MOTD files
           ansible.builtin.file:
-            path: /etc/motd.d
-            state: directory
-            owner: root
-            group: root
-            mode: '0755'
-        - name: Create MOTD file for {{ .Values.tenant }}
-          ansible.builtin.copy:
-            content: |
-              ##############################################
-              #  MOTD for user: {{ .Values.tenant }}
-              ##############################################
-
-              Hello {{ .Values.tenant }}!
-
-              Your RHEM virtual machine is available at: rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local
-              
-              Use the following credentials:
-              Username: {{ .Values.tenant }}
-              Password: {{ .Values.bastionSshPassword }}
-
-              To connect, use the following command:
-              ssh {{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local
-            dest: /etc/motd.d/10-motd-{{ .Values.tenant }}
-            owner: root
-            group: root
-            mode: '0644'
+            path: "/etc/motd.d/{{- "{{" }} file {{ "}}" }}"
+            state: absent
+          loop:
+            - insights
+            - cockpit
+          loop_control:
+            loop_var: file
+        - name: Toss MOTD file in user's .bashrc
+          ansible.builtin.blockinfile:
+            path: /home/{{ .Values.tenant }}/.bashrc
+            insertafter: EOF
+            block: |
+              echo "Hello {{ .Values.tenant }}!"
+              echo ""
+              echo "Your RHEM virtual machine is available at: rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local"
+              echo ""
+              echo "Use the following credentials:"
+              echo "Username: {{ .Values.tenant }}"
+              echo "Password: {{ .Values.bastionSshPassword }}"
+              echo ""
+              echo "To connect, use the following command:"
+              echo "ssh {{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local"
+            
   
   ansible.cfg: |
     [defaults]
