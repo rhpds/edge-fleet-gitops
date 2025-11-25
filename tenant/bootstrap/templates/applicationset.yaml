@@ -31,7 +31,7 @@ spec:
         helm:
           values: |
             gitBranch: rh1-2026
-            tenantName: {{ "{{" }}.tenant{{- "}}"}}
+            tenant: {{ "{{" }}.tenant{{- "}}"}}
             bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
             guid: {{ .Values.guid }}
       destination:
