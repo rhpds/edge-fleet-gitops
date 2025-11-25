@@ -1,2 +1,7 @@
 josh-testing-values.yaml
 ignore/
+charts/
+scratch*
+hold/
+testing/
+tmp/
