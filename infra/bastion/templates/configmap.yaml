@@ -11,7 +11,7 @@ data:
       hosts:
         bastion:
           ansible_user: admin
-          ansible_pass: changemelater
+          ansible_password: changemelater
           ansible_host: bastion-ssh.bastion.svc.cluster.local
 
   playbook.yaml: |
