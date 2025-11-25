@@ -26,4 +26,5 @@ spec:
       values: |
         gitBranch: rh1-2026
         rhemVirtualMachine:
+          username: {{ .Values.tenant }}
           password: {{ .Values.bastionSshPassword }}

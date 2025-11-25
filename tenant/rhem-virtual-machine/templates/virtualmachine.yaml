@@ -78,5 +78,7 @@ spec:
             name: 'rhem-virtual-machine'
           name: 'rootdisk'
         - cloudInitNoCloud:
-            userData: "#cloud-config\nuser: cloud-user\npassword: {{ .Values.rhemVirtualMachine.password }}\nchpasswd: { expire: False }"
+            {{- with .Values.rhemVirtualMachine }}
+            userData: "#cloud-config\nuser: {{ .username }}\npassword: {{ .password }}\nchpasswd: { expire: False }"
+            {{- end }}
           name: 'cloudinitdisk'
