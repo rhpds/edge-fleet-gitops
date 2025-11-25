@@ -38,7 +38,7 @@ data:
             path: "/etc/motd.d/{{- "{{" }} file {{ "}}" }}"
             state: absent
           loop:
-            - insights
+            - insights-client
             - cockpit
           loop_control:
             loop_var: file
