@@ -3,7 +3,6 @@ kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
   name: drone-virtual-machine
-  namespace: wksp-{{ .Values.tenantName }}
   labels:
     template.kubevirt.io/version: v0.34.1
     app.kubernetes.io/version: 4.20.0
