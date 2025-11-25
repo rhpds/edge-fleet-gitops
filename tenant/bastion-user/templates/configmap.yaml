@@ -1,0 +1,40 @@
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ansible-job-inputs
+data:
+  inventory.yaml: |
+    ---
+    all:
+      hosts:
+        bastion:
+          ansible_user: admin
+          ansible_password: changemelater
+          ansible_host: bastion-ssh.bastion.svc.cluster.local
+
+  playbook.yaml: |
+    ---
+    - name: Setup user on bastion host
+      hosts:
+        - all
+      gather_facts: false
+      vars_files:
+        - /runner/variables.yaml
+      pre_tasks:
+        - name: Wait for VM to be up
+          ansible.builtin.wait_for_connection:
+            timeout: 600
+      tasks:
+        - name: Create user account
+          ansible.builtin.user:
+            name: "{{ student.username }}"
+            create_home: true
+            generate_ssh_key: true
+            password: "{{ student.password | password_hash('sha512', 'rhem') }}"
+            state: present
+  
+  ansible.cfg: |
+    [defaults]
+    host_key_checking = False

@@ -2,24 +2,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.username }}-rhem-virtual-machine
+  name: {{ .Values.tenant }}-{{ .Values.guid }}-drone-vm-template
   namespace: openshift-gitops
   labels:
-    application: {{ .Values.username }}-rhem-virtual-machine
+    application: {{ .Values.tenant }}-{{ .Values.guid }}-drone-vm-template
+    guid.rhdp.io: {{ .Values.guid }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: wksp-{{ .Values.username }}
   project: default
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
   source:
     repoURL: https://github.com/rhpds/edge-fleet-gitops.git
     targetRevision: rh1-2026
-    path: user/rhem-virtual-machine/
+    path: tenant/drone-vm-template/
     helm:
       values: |
         gitBranch: rh1-2026
-        rhemVirtualMachine:
-          password: replacemelater
+        tenant: {{ .Values.tenant }}

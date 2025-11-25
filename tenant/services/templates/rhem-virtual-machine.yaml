@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.tenant }}-{{ .Values.guid }}-rhem-virtual-machine
+  namespace: openshift-gitops
+  labels:
+    application: {{ .Values.tenant }}-{{ .Values.guid }}-rhem-virtual-machine
+    guid.rhdp.io: {{ .Values.guid }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+    namespace: wksp-{{ .Values.tenant }}
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  source:
+    repoURL: https://github.com/rhpds/edge-fleet-gitops.git
+    targetRevision: rh1-2026
+    path: tenant/rhem-virtual-machine/
+    helm:
+      values: |
+        gitBranch: rh1-2026
+        rhemVirtualMachine:
+          password: {{ .Values.bastionSshPassword }}
