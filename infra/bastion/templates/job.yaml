@@ -22,7 +22,7 @@ spec:
         - name: run-ansible-playbook
           image: quay.io/jswanson/general-ansible-ee:rh1-2026
           imagePullPolicy: Always
-          command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vvvvv"]
+          command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vv"]
           volumeMounts:
             - name: inventory
               mountPath: /runner/inventory.yaml
