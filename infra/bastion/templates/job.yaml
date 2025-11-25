@@ -20,7 +20,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: run-ansible-playbook
-          image: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
+          image: quay.io/ansible/ansible-runner:latest
           command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vvvvv"]
           volumeMounts:
             - name: inventory
