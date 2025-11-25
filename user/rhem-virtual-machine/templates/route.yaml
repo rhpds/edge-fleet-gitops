@@ -35,5 +35,3 @@ spec:
     name: keycloak-webui
   port:
     targetPort: webui
-  tls:
-    termination: edge
