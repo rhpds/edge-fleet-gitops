@@ -42,9 +42,9 @@ data:
             - cockpit
           loop_control:
             loop_var: file
-        - name: Toss MOTD file in user's .bashrc
+        - name: Toss MOTD file in user's .bash_profile
           ansible.builtin.blockinfile:
-            path: /home/{{ .Values.tenant }}/.bashrc
+            path: /home/{{ .Values.tenant }}/.bash_profile
             insertafter: EOF
             block: |
               echo "Hello {{ .Values.tenant }}!"
