@@ -77,5 +77,5 @@ spec:
             name: 'bastion'
           name: 'rootdisk'
         - cloudInitNoCloud:
-            userData: "#cloud-config\nuser: admin\npassword: changemelater\nchpasswd: { expire: False }"
+            userData: "#cloud-config\nuser: admin\npassword: changemelater\nchpasswd: { expire: False }\nssh_pwauth: true"
           name: 'cloudinitdisk'
