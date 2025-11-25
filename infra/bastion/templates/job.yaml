@@ -21,7 +21,7 @@ spec:
       containers:
         - name: run-ansible-playbook
           image: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
-          command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vv"]
+          command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vvvvv"]
           volumeMounts:
             - name: inventory
               mountPath: /runner/inventory.yaml
