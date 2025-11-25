@@ -16,7 +16,7 @@ spec:
 {{- end }}
   template:
     metadata:
-      name: '{{- "{{" }}tenant{{- "}}" }}-{{ .Values.guid }}-services'
+      name: '{{- "{{" }}.tenant{{- "}}" }}-{{ .Values.guid }}-services'
       namespace: openshift-gitops
       labels:
         guid.rhdp.io: {{ .Values.guid }}
