@@ -21,6 +21,7 @@ spec:
       containers:
         - name: run-ansible-playbook
           image: quay.io/jswanson/general-ansible-ee:rh1-2026
+          imagePullPolicy: Always
           command: ["ansible-playbook", "/runner/playbook.yaml", "--inventory", "/runner/inventory.yaml", "-vvvvv"]
           volumeMounts:
             - name: inventory
@@ -29,6 +30,9 @@ spec:
             - name: playbook
               mountPath: /runner/playbook.yaml
               subPath: playbook.yaml
+            - name: ansible-cfg
+              mountPath: /runner/ansible.cfg
+              subPath: ansible.cfg
             - name: scratch
               mountPath: /.ansible
       volumes:
@@ -36,6 +40,9 @@ spec:
           configMap:
             name: ansible-job-inputs
         - name: playbook
+          configMap:
+            name: ansible-job-inputs
+        - name: ansible-cfg
           configMap:
             name: ansible-job-inputs
         - name: scratch
