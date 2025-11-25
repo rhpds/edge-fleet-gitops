@@ -3,7 +3,7 @@ kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
   name: drone-virtual-machine
-  namespace: wksp-{{ .Values.tenant }}
+  namespace: wksp-{{ .Values.tenantName }}
   labels:
     template.kubevirt.io/version: v0.34.1
     app.kubernetes.io/version: 4.20.0
@@ -35,7 +35,7 @@ metadata:
     tags: 'hidden,kubevirt,virtualmachine,linux,rhde'
     name.os.template.kubevirt.io/rhel9.5: Red Hat Enterprise Linux 9.0 or higher
     template.kubevirt.io/provider-support-level: None
-    description: Template for {{ include "drone-vm-template.capitalizeFirst" .Values.tenant }} drone virtual machine. Won't provision until a data source is available.
+    description: Template for {{ include "drone-vm-template.capitalizeFirst" .Values.tenantName }} drone virtual machine. Won't provision until a data source is available.
     openshift.io/support-url: 'https://github.com/kubevirt/common-templates/issues'
     iconClass: icon-rhel
     openshift.io/provider-display-name: Red Hat Edge BU
