@@ -10,7 +10,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: openshift-operators
+    namespace: bastion
   project: default
   syncPolicy:
     automated:
