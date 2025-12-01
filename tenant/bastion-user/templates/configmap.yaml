@@ -57,8 +57,3 @@ data:
               echo ""
               echo "To connect, use the following command:"
               echo "ssh {{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local"
-            
-  
-  ansible.cfg: |
-    [defaults]
-    host_key_checking = False
