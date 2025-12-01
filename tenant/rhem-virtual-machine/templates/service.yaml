@@ -50,3 +50,16 @@ spec:
       port: 22
       targetPort: 22
       name: ssh
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: import-disk-image
+spec:
+  selector:
+    kubevirt.io/domain: rhem-virtual-machine
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+      name: http
