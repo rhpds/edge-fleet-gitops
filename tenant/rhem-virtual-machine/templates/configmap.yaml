@@ -9,7 +9,7 @@ data:
     ---
     all:
       hosts:
-        bastion:
+        rhem-virtual-machine:
           {{- with .Values.rhemVirtualMachine }}
           ansible_user: {{ .username }}
           ansible_password: {{ .password }}
@@ -39,6 +39,7 @@ data:
             mode: '0755'
             exclude:
               - README.md
+            remote_src: true
         - name: Grab pull secret
           ansible.builtin.shell:
             cmd: oc get secret pull-secret -n openshift-config -o json
