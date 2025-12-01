@@ -129,7 +129,7 @@ objects:
           terminationGracePeriodSeconds: 180
           volumes:
             - dataVolume:
-                name: '${NAME}'
+                name: '${NAME}-disk'
               name: rootdisk
             - cloudInitNoCloud:
                 userData: |-
