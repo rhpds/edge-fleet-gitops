@@ -75,7 +75,7 @@ objects:
         - apiVersion: cdi.kubevirt.io/v1beta1
           kind: DataVolume
           metadata:
-            name: '${NAME}'
+            name: '${NAME}-disk'
           spec:
             sourceRef:
               kind: DataSource
