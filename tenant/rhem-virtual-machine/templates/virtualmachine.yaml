@@ -68,7 +68,7 @@ spec:
         machine:
           type: 'pc-q35-rhel9.6.0'
         memory:
-          guest: '4Gi'
+          guest: '8Gi'
       networks:
         - name: 'default'
           pod: {}
