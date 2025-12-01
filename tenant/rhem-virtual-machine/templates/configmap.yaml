@@ -53,5 +53,5 @@ data:
         - name: Populate user's pull secret
           ansible.builtin.copy:
             content: "{{ "{{" }} _pull_secret | to_nice_json {{ "}}" }}"
-            dest: /home/{{ .Values.tenant }}/.config/containers/auth.json
+            dest: /home/{{ .Values.rhemVirtualMachine.username }}/.config/containers/auth.json
           
