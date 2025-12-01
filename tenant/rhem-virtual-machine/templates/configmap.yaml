@@ -1,0 +1,54 @@
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ansible-job-inputs
+data:
+  inventory.yaml: |
+    ---
+    all:
+      hosts:
+        bastion:
+          ansible_user: {{ .Values.tenant }}
+          ansible_password: {{ .Values.bastionSshPassword }}
+          ansible_host: rhem-on-rhel-ssh.{{ .Release.Namespace }}.svc.cluster.local
+
+  playbook.yaml: |
+    ---
+    - name: Initial setup of the bastion host
+      hosts:
+        - all
+      gather_facts: false
+      become: true
+      pre_tasks:
+        - name: Wait for VM to be up
+          ansible.builtin.wait_for_connection:
+            timeout: 600
+      tasks:
+        - name: Download oc client from mirror site
+          ansible.builtin.get_url:
+            url: https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
+            dest: /tmp/oc.tar.gz
+        - name: Extract oc cli tool
+          ansible.builtin.unarchive:
+            src: /tmp/oc.tar.gz
+            dest: /tmp/usr/local/bin/
+            mode: '0755'
+            exclude:
+              - README.md
+        - name: Grab pull secret
+          ansible.builtin.shell:
+            cmd: oc get secret pull-secret -n openshift-config -o json
+          register: _pull_secret_raw
+          changed_when: false
+          delegate_to: localhost
+          become: false
+        - name: Extract pull secret
+          ansible.builtin.set_fact:
+            _pull_secret: "{{ "{{" }} _pull_secret_raw.stdout | from_json | json_query('data.\".dockerconfigjson\"') | b64decode | from_json {{ "}}" }}"
+        - name: Populate user's pull secret
+          ansible.builtin.copy:
+            content: "{{ "{{" }} _pull_secret | to_nice_json {{ "}}" }}"
+            dest: /home/{{ .Values.tenant }}/.config/containers/auth.json
+          
