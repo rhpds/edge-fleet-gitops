@@ -10,8 +10,10 @@ data:
     all:
       hosts:
         bastion:
-          ansible_user: {{ .Values.tenant }}
-          ansible_password: {{ .Values.bastionSshPassword }}
+          {{- with .Values.rhemVirtualMachine }}
+          ansible_user: {{ .username }}
+          ansible_password: {{ .password }}
+          {{- end }}
           ansible_host: rhem-on-rhel-ssh.{{ .Release.Namespace }}.svc.cluster.local
 
   playbook.yaml: |
