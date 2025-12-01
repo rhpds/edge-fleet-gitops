@@ -21,8 +21,8 @@ spec:
     kubevirt.io/domain: rhem-virtual-machine
   ports:
     - protocol: TCP
-      port: 6443
-      targetPort: 6443
+      port: 3443
+      targetPort: 3443
       name: api
 ---
 apiVersion: v1
