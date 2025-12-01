@@ -50,6 +50,7 @@ data:
         - name: Extract pull secret
           ansible.builtin.set_fact:
             _pull_secret: "{{ "{{" }} _pull_secret_raw.stdout | from_json | json_query('data.\".dockerconfigjson\"') | b64decode | from_json {{ "}}" }}"
+          delegate_to: localhost
         - name: Populate user's pull secret
           ansible.builtin.copy:
             content: "{{ "{{" }} _pull_secret | to_nice_json {{ "}}" }}"
