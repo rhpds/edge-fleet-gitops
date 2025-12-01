@@ -31,6 +31,9 @@ spec:
             - name: playbook
               mountPath: /runner/playbook.yaml
               subPath: playbook.yaml
+            - name: script
+              mountPath: /runner/import-disk-image.sh
+              subPath: import-disk-image.sh
             - name: scratch
               mountPath: /.ansible
       volumes:
@@ -38,6 +41,9 @@ spec:
           configMap:
             name: rhem-vm-ansible-job-inputs
         - name: playbook
+          configMap:
+            name: rhem-vm-ansible-job-inputs
+        - name: script
           configMap:
             name: rhem-vm-ansible-job-inputs
         - name: scratch
