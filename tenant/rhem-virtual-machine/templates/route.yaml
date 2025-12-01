@@ -23,7 +23,7 @@ spec:
   port:
     targetPort: api
   tls:
-    termination: edge
+    termination: passthrough
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
