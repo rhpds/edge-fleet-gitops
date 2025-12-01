@@ -35,7 +35,7 @@ data:
         - name: Extract oc cli tool
           ansible.builtin.unarchive:
             src: /tmp/oc.tar.gz
-            dest: /tmp/usr/local/bin/
+            dest: /usr/local/bin/
             mode: '0755'
             exclude:
               - README.md
