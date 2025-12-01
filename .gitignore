@@ -5,3 +5,4 @@ scratch*
 hold/
 testing/
 tmp/
+.venv
