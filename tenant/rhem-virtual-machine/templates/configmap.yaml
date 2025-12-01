@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ansible-job-inputs
+  name: rhem-vm-ansible-job-inputs
 data:
   inventory.yaml: |
     ---

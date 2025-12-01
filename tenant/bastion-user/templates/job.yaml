@@ -35,9 +35,9 @@ spec:
       volumes:
         - name: inventory
           configMap:
-            name: ansible-job-inputs
+            name: bastion-ansible-job-inputs
         - name: playbook
           configMap:
-            name: ansible-job-inputs
+            name: bastion-ansible-job-inputs
         - name: scratch
           emptyDir: {}
