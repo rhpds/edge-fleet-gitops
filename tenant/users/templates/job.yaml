@@ -36,3 +36,41 @@ spec:
             name: htpasswd-job-ansible-inputs
         - name: scratch
           emptyDir: {}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.guid }}-edit-oauth
+  namespace: wksp-{{ .Values.guid }}
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+  labels:
+    app.kubernetes.io/name: edit-oauth-job
+    app.kubernetes.io/part-of: edit-oauth
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: edit-oauth-job
+        app.kubernetes.io/part-of: edit-oauth
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: run-ansible-playbook
+          image: quay.io/jswanson/general-ansible-ee:rh1-2026
+          imagePullPolicy: Always
+          command: ["ansible-playbook", "/runner/playbook.yaml", "-vv"]
+          volumeMounts:
+            - name: playbook
+              mountPath: /runner/playbook.yaml
+              subPath: playbook.yaml
+            - name: scratch
+              mountPath: /.ansible
+      volumes:
+        - name: playbook
+          configMap:
+            name: htpasswd-job-ansible-inputs
+        - name: scratch
+          emptyDir: {}
