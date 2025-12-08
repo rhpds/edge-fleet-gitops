@@ -9,6 +9,6 @@ roleRef:
   kind: ClusterRole
   name: edit
 subjects:
-  - kind: ServiceAcount
+  - kind: ServiceAccount
     name: default
     namespace: wksp-{{ .Values.guid }}
