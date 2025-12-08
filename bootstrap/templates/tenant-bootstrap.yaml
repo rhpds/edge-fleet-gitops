@@ -23,7 +23,9 @@ spec:
       values: |
         gitBranch: rh1-2026
         user:
-          prefix: "{{ .Values.openshift_cluster_user_base }}"
-          count: "{{ .Values.openshift_cluster_user_count }}"
+          {{- with .Values.user }}
+          prefix: "{{ .prefix }}"
+          count: "{{ .count }}"
+          {{- end }}
         guid: "{{ .Values.guid }}"
         bastion_ssh_password: "{{ .Values.bastion_ssh_password }}"
