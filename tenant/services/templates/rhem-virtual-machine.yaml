@@ -13,7 +13,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: wksp-{{ .Values.tenant }}
+    namespace: wksp-{{ .Values.tenant }}-{{ .Values.guid }}
   project: default
   syncPolicy:
     automated:
