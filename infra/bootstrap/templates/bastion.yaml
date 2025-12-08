@@ -22,4 +22,4 @@ spec:
     helm:
       values: |
         bastion:
-          password: changemelater
+          password: "{{ .Values.bastion_ssh_password }}"
