@@ -156,7 +156,7 @@ data:
 
       echo "Ensuring permissions are correct on the export directory..."
       sudo chown -R {{ .Values.rhemVirtualMachine.username }}:{{ .Values.rhemVirtualMachine.username }} "$QCOW_PATH"
-      sudo chmod 0744 "$QCOW_PATH"
+      sudo chmod -R 0755 "$QCOW_PATH"
       sudo semanage fcontext -a -t container_file_t "$QCOW_PATH(/.*)?"
       sudo restorecon -Rv "$QCOW_PATH"
 
