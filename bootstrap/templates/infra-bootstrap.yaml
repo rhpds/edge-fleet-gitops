@@ -22,3 +22,5 @@ spec:
     helm:
       values: |
         gitBranch: rh1-2026
+        openshiftClusterIngressDomain: "{{ .Values.openshift_cluster_ingress_domain }}"
+        bastion_ssh_password: "{{ .Values.bastion_ssh_password }}"
