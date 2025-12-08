@@ -4,7 +4,6 @@ kind: 'VirtualMachine'
 metadata:
   annotations:
     vm.kubevirt.io/validations: "[\n  {\n    \"name\": \"minimal-required-memory\",\n    \"path\": \"jsonpath::.spec.domain.memory.guest\",\n    \"rule\": \"integer\",\n    \"message\": \"This VM requires more memory.\",\n    \"min\": 1610612736\n  }\n]\n"
-  generation: 1
   labels:
     app: 'rhem-virtual-machine'
     kubevirt.io/dynamic-credentials-support: 'true'
