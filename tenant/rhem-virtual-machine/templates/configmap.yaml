@@ -126,6 +126,16 @@ data:
       esac
     done
 
+    echo "Checking cluster login..."
+    if ! oc whoami >/dev/null 2>&1; then
+      echo "ERROR: You are not logged in to an OpenShift cluster."
+      echo "Ensure you are logged in before running this script."
+      echo "Copy the login command from the web console to login."
+      exit 1
+    else
+      echo "Logged in as $(oc whoami)..."
+    fi
+
     if podman ps -a --format "{{ "{{" }}.Names{{ "}}" }}" | grep -q "^httpd-qcow2$"; then
       echo "Existing container found, removing it..."
       podman rm -f httpd-qcow2 > /dev/null
@@ -144,6 +154,12 @@ data:
         podman rm -f httpd-qcow2 >/dev/null
       fi
 
+      echo "Ensuring permissions are correct on the export directory..."
+      sudo chown -R $(whoami):$(whoami) "$QCOW_PATH"
+      sudo chmod -R 0644 "$QCOW_PATH"
+      sudo semanage fcontext -a -t container_file_t "$QCOW_PATH(/.*)?"
+      sudo restorecon -Rv "$QCOW_PATH"
+
       echo "Starting new container..."
       podman run -d \
         --name httpd-qcow2 \
@@ -152,16 +168,6 @@ data:
         ubi9/httpd-24
 
       echo "Container 'httpd-qcow2' running on port 8888"
-    fi
-
-    echo "Checking cluster login..."
-    if ! oc whoami >/dev/null 2>&1; then
-      echo "ERROR: You are not logged in to an OpenShift cluster."
-      echo "Ensure you are logged in before running this script."
-      echo "Copy the login command from the web console to login."
-      exit 1
-    else
-      echo "Logged in as $(oc whoami)..."
     fi
 
     echo "Ensuring the correct namespace is used..."
