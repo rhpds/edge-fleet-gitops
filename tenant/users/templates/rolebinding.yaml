@@ -9,6 +9,6 @@ roleRef:
   kind: ClusterRole
   name: edit
 subjects:
-  - apiGroup: rbac.authorization.k8s.io
-    kind: ServiceAccount
+  - kind: ServiceAcount
     name: default
+    namespace: wksp-{{ .Values.guid }}
