@@ -155,7 +155,7 @@ data:
       fi
 
       echo "Ensuring permissions are correct on the export directory..."
-      sudo chown -R $(whoami):$(whoami) "$QCOW_PATH"
+      sudo chown -R {{ .Values.rhemVirtualMachine.username }}:{{ .Values.rhemVirtualMachine.username }} "$QCOW_PATH"
       sudo chmod -R 0644 "$QCOW_PATH"
       sudo semanage fcontext -a -t container_file_t "$QCOW_PATH(/.*)?"
       sudo restorecon -Rv "$QCOW_PATH"
