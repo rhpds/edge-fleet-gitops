@@ -1,0 +1,32 @@
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: htpasswd-job-ansible-inputs
+  namespace: wksp-{{ .Values.guid }}
+data:
+  playbook.yaml: |
+    ---
+    - name: Initial setup of the bastion host
+      hosts:
+        - localhost
+      gather_facts: false
+      tasks:
+        - name: Add users to htpasswd file
+          community.general.htpasswd:
+            path: /tmp/htpasswd
+            create: true
+            name: '{{- "{{" }} item {{ "}}" }}'
+            password: '{{ .Values.bastionSshPassword }}'
+          loop:
+            {{- $userCount := int .Values.user.count }}
+            {{- range $index := until $userCount }}
+            - {{ $.Values.user.prefix }}{{ add $index 1 }}-{{ $.Values.guid }}
+            {{- end }}
+        - name: Create secret
+          ansible.builtin.shell:
+            cmd: >
+              oc create secret generic {{ .Values.guid }}-htpasswd \
+              --from-file=htpasswd=/tmp/htpasswd \
+              --dry-run=client -o yaml | oc apply -f -
