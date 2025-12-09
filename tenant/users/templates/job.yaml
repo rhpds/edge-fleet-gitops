@@ -71,6 +71,6 @@ spec:
       volumes:
         - name: playbook
           configMap:
-            name: htpasswd-job-ansible-inputs
+            name: oauth-job-ansible-inputs
         - name: scratch
           emptyDir: {}
