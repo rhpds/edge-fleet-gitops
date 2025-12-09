@@ -34,6 +34,9 @@ spec:
             tenant: {{ "{{" }}.tenant{{- "}}"}}
             bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
             guid: {{ .Values.guid }}
+            satelliteActivationKey: "{{ .Values.satellite_activationkey }}"
+            satelliteOrg: "{{ .Values.satellite_org }}"
+            satelliteUrl: "{{ .Values.satellite_url }}"
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:

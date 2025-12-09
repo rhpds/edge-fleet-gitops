@@ -29,3 +29,6 @@ spec:
           {{- end }}
         guid: "{{ .Values.guid }}"
         bastion_ssh_password: "{{ .Values.bastion_ssh_password }}"
+        satellite_activationkey: "{{ .Values.satellite_activationkey }}"
+        satellite_org: "{{ .Values.satellite_org }}"
+        satellite_url: "{{ .Values.satellite_url }}"

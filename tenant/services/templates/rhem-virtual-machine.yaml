@@ -28,3 +28,6 @@ spec:
         rhemVirtualMachine:
           username: {{ .Values.tenant }}
           password: {{ .Values.bastionSshPassword }}
+          satelliteActivationKey: "{{ .Values.satelliteActivationKey }}"
+          satelliteOrg: "{{ .Values.satelliteOrg }}"
+          satelliteUrl: "{{ .Values.satelliteUrl }}"
