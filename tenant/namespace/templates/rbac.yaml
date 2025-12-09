@@ -13,16 +13,16 @@ subjects:
     kind: User
     name: {{ .Values.guid }}-{{ .Values.tenant }}
 ---
-  apiVersion: rbac.authorization.k8s.io/v1
-  kind: RoleBinding
-  metadata:
-    name: {{ .Values.guid }}-{{ .Values.tenant }}-flightctl-admin
-    namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}
-  roleRef:
-    apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: flightctl-admin
-  subjects:
-    - apiGroup: rbac.authorization.k8s.io
-      kind: User
-      name: {{ .Values.guid }}-{{ .Values.tenant }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.guid }}-{{ .Values.tenant }}-flightctl-admin
+  namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flightctl-admin
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: {{ .Values.guid }}-{{ .Values.tenant }}
