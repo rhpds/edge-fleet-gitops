@@ -7,3 +7,6 @@ rules:
   - apiGroups: ["config.openshift.io"]
     resources: ["oauth", "oauths"]
     verbs: ["get", "list", "watch", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["*"]
