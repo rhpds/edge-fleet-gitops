@@ -19,6 +19,7 @@ spec:
         app.kubernetes.io/part-of: create-htpasswd
     spec:
       restartPolicy: OnFailure
+      serviceAccountName: oauth-manager
       containers:
         - name: run-ansible-playbook
           image: quay.io/jswanson/general-ansible-ee:rh1-2026
@@ -57,6 +58,7 @@ spec:
         app.kubernetes.io/part-of: edit-oauth
     spec:
       restartPolicy: OnFailure
+      serviceAccountName: oauth-manager
       containers:
         - name: run-ansible-playbook
           image: quay.io/jswanson/general-ansible-ee:rh1-2026
