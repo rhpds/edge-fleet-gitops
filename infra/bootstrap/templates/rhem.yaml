@@ -8,8 +8,9 @@ metadata:
     application: rhem
 spec:
   syncPolicy:
-    automated:
-      prune: true
+    automated: false
+#    automated:
+#      prune: true
     syncOptions:
       - CreateNamespace=true
   destination:
