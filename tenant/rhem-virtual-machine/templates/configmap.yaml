@@ -28,6 +28,13 @@ data:
           ansible.builtin.wait_for_connection:
             timeout: 600
       tasks:
+        - name: Install Satellite cert bundle
+          ansible.builtin.dnf:
+            name: https://demosat-ha.infra.demo.redhat.com/pub/katello-ca-consumer-latest.noarch.rpm
+            sslverify: false
+            validate_certs: false
+            state: present
+            disable_gpg_check: true
         - name: Register to satellite
           community.general.redhat_subscription:
             state: present
