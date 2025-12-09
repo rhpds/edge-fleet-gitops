@@ -3,7 +3,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.guid }}-create-htpasswd
-  namespace: wksp-{{ .Values.guid }}
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -42,7 +41,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ .Values.guid }}-edit-oauth
-  namespace: wksp-{{ .Values.guid }}
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
