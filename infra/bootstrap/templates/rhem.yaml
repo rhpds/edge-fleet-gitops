@@ -45,5 +45,5 @@ spec:
           value: 'https://oauth-openshift.{{ .Values.openshiftClusterIngressDomain }}/oauth/authorize'
         - name: global.generateCertificates
           value: builtin
-    repoURL: quay.io/flightctl/charts/flightctl
+    repoURL: quay.io/flightctl/charts
     targetRevision: 1.0.0-rc2
