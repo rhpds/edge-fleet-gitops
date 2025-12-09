@@ -4,8 +4,8 @@ kind: ClusterRole
 metadata:
   name: oauth-manager
 rules:
-  - apiGroups: ["config.openshift.io/v1"]
-    resources: ["OAuth"]
+  - apiGroups: ["config.openshift.io"]
+    resources: ["OAuth", "oauth", "OAuths", "oauths"]
     verbs: ["get", "list", "watch", "patch", "update"]
   - apiGroups: [""]
     resources: ["secrets"]
