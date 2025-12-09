@@ -4,8 +4,6 @@ kind: Application
 metadata:
   name: argocd-resource-healthchecks
   namespace: openshift-gitops
-  labels:
-    application: argocd-resource-healthchecks
 spec:
   destination:
     name: ''
