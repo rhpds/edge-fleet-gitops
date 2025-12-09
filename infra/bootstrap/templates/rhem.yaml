@@ -8,7 +8,6 @@ metadata:
     application: rhem
 spec:
   syncPolicy:
-    automated: false
 #    automated:
 #      prune: true
     syncOptions:
@@ -46,5 +45,5 @@ spec:
           value: 'https://oauth-openshift.{{ .Values.openshiftClusterIngressDomain }}/oauth/authorize'
         - name: global.generateCertificates
           value: builtin
-    repoURL: 'https://rawagner.github.io/flightctl'
-    targetRevision: 0.2.0
+    repoURL: quay.io/flightctl/charts/flightctl
+    targetRevision: 1.0.0-rc2
