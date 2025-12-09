@@ -33,4 +33,4 @@ spec:
           count: "{{ .count }}"
           {{- end }}
         guid: "{{ .Values.guid }}"
-        bastion_ssh_password: "{{ .Values.bastion_ssh_password }}"
+        bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
