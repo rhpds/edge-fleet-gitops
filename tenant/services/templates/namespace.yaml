@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.tenant }}-{{ .Values.guid }}-namespace
+  name: {{ .Values.guid }}-{{ .Values.tenant }}-namespace
   namespace: openshift-gitops
   labels:
-    application: {{ .Values.tenant }}-{{ .Values.guid }}-namespace
+    application: {{ .Values.guid }}-{{ .Values.tenant }}-namespace
     guid.rhdp.io: {{ .Values.guid }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io

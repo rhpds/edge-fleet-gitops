@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.tenant }}-{{ .Values.guid }}-rhem-virtual-machine
+  name: {{ .Values.guid }}-{{ .Values.tenant }}-rhem-virtual-machine
   namespace: openshift-gitops
   labels:
-    application: {{ .Values.tenant }}-{{ .Values.guid }}-rhem-virtual-machine
+    application: {{ .Values.guid }}-{{ .Values.tenant }}-rhem-virtual-machine
     guid.rhdp.io: {{ .Values.guid }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -13,7 +13,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: wksp-{{ .Values.tenant }}-{{ .Values.guid }}
+    namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}
   project: default
   syncPolicy:
     automated:

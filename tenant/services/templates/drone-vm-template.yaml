@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.tenant }}-{{ .Values.guid }}-drone-vm-template
+  name: {{ .Values.guid }}-{{ .Values.tenant }}-drone-vm-template
   namespace: openshift-gitops
   labels:
-    application: {{ .Values.tenant }}-{{ .Values.guid }}-drone-vm-template
+    application: {{ .Values.guid }}-{{ .Values.tenant }}-drone-vm-template
     guid.rhdp.io: {{ .Values.guid }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -13,7 +13,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: wksp-{{ .Values.tenant }}-{{ .Values.guid }}
+    namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}
   project: default
   syncPolicy:
     automated:
