@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oauth-manager
+  namespace: openshift-gitops
+  labels:
+    application: oauth-manager
+spec:
+  destination:
+    name: ''
+    server: https://kubernetes.default.svc
+    namespace: oauth-manager
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+  source:
+    repoURL: https://github.com/rhpds/edge-fleet-gitops.git
+    targetRevision: {{ .Values.gitBranch | default "main" }}
+    path: infra/oauth-manager/
+    helm:
