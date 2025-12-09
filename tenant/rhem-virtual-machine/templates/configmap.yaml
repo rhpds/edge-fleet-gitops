@@ -28,6 +28,18 @@ data:
           ansible.builtin.wait_for_connection:
             timeout: 600
       tasks:
+        - name: Register to satellite
+          community.general.redhat_subscription:
+            state: present
+            org_id: "{{ .Values.satelliteOrg }}"
+            activationkey: "{{ .Values.satelliteActivationKey }}"
+            server_hostname: "{{ .Values.satelliteUrl }}"
+        - name: Install some base packages
+          ansible.builtin.dnf:
+            name:
+              - git
+              - podman
+              - vim
         - name: Download oc client from mirror site
           ansible.builtin.get_url:
             url: https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
