@@ -10,7 +10,6 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: oauth-manager
   project: default
   syncPolicy:
     automated:
