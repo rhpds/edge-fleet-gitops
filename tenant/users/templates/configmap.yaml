@@ -20,7 +20,7 @@ data:
           loop:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-            - {{ $.Values.user.prefix }}{{ add $index 1 }}-{{ $.Values.guid }}
+            - {{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}
             {{- end }}
         - name: Create secret
           ansible.builtin.shell:
