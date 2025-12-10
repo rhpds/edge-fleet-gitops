@@ -18,7 +18,7 @@ data:
 
   playbook.yaml: |
     ---
-    - name: Initial setup of the bastion host
+    - name: Initial setup of the student virtual machine
       hosts:
         - all
       gather_facts: false
