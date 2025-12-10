@@ -11,7 +11,7 @@ data:
       hosts:
         bastion:
           ansible_user: admin
-          ansible_password: {{ .Values.bastion.password }}
+          ansible_password: {{ .Values.bastionSshPassword }}
           ansible_host: bastion-ssh.bastion.svc.cluster.local
           ansible_become: true
 
