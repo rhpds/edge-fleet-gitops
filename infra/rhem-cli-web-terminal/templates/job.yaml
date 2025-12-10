@@ -4,9 +4,11 @@ kind: Job
 metadata:
   name: get-webconsole-image
   annotations:
+    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
-  backoffLimit: 3
+  backoffLimit: 6
   template:
     spec:
       serviceAccountName: patch-web-terminal-tooling
@@ -40,9 +42,11 @@ kind: Job
 metadata:
   name: start-rhem-cli-web-terminal-build
   annotations:
+    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
-  backoffLimit: 5
+  backoffLimit: 6
   template:
     spec:
       serviceAccountName: patch-web-terminal-tooling
@@ -67,7 +71,8 @@ kind: Job
 metadata:
   name: patch-web-terminal-tooling
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   backoffLimit: 3
   template:
