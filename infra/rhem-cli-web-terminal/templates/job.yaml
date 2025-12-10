@@ -8,7 +8,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
-  backoffLimit: 6
+  backoffLimit: 20
   template:
     spec:
       serviceAccountName: patch-web-terminal-tooling
@@ -22,6 +22,10 @@ spec:
             - |
               echo "Getting current web terminal image..."
               IMAGE=$(oc get devworkspacetemplate web-terminal-tooling -n openshift-operators -o go-template='{{ "{{" }} (index .spec.components 0).container.image {{ "}}" }}')
+              if [ -z "$IMAGE" ]; then
+                echo "Image not found, failing..."
+                exit 1
+              fi
               echo "Current image: $IMAGE"
               echo "Create Containerfile for image build..."
               echo "---
