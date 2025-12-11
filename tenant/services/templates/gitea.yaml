@@ -27,3 +27,4 @@ spec:
         gitBranch: rh1-2026
         giteaAdminUsername: "{{ .Values.giteaAdminUsername }}"
         giteaAdminPassword: "{{ .Values.giteaAdminPassword }}"
+        openshiftClusterIngressDomain: "{{ .Values.openshiftClusterIngressDomain }}"
