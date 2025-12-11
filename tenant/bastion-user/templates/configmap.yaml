@@ -28,7 +28,7 @@ data:
       tasks:
         - name: Create user account
           ansible.builtin.user:
-            name: "{{ .Values.tenant }}"
+            name: "{{ .Values.guid }}-{{ .Values.tenant }}"
             create_home: true
             generate_ssh_key: true
             password: "{{- "{{" }} '{{ .Values.bastionSshPassword }}' | password_hash('sha512', 'rhem') {{ "}}" }}"
