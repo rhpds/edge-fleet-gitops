@@ -30,3 +30,4 @@ spec:
         openshiftClusterIngressDomain: "{{ .Values.openshiftClusterIngressDomain }}"
         tenant: {{ .Values.tenant }}
         guid: "{{ .Values.guid }}"
+        bastionSshPassword: "{{ .Values.bastionSshPassword }}"
