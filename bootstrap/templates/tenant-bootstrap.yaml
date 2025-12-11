@@ -34,3 +34,4 @@ spec:
         satellite_url: "{{ .Values.satellite_url }}"
         gitea_admin_username: "{{ .Values.gitea_admin_username }}"
         gitea_admin_password: "{{ .Values.gitea_admin_password }}"
+        openshiftClusterIngressDomain: "{{ .Values.deployer.domain }}"
