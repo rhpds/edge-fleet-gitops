@@ -44,16 +44,16 @@ data:
             loop_var: file
         - name: Toss MOTD file in user's .bash_profile
           ansible.builtin.blockinfile:
-            path: /home/{{ .Values.tenant }}/.bash_profile
+            path: /home/{{ .Values.guid }}-{{ .Values.tenant }}/.bash_profile
             insertafter: EOF
             block: |
-              echo "Hello {{ .Values.tenant }}!"
+              echo "Hello {{ .Values.guid }}-{{ .Values.tenant }}!"
               echo ""
-              echo "Your RHEM virtual machine is available at: rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local"
+              echo "Your RHEM virtual machine is available at: rhem-on-rhel-ssh.wksp-{{ .Values.guid }}-{{ .Values.tenant }}.svc.cluster.local"
               echo ""
               echo "Use the following credentials:"
-              echo "Username: {{ .Values.tenant }}"
+              echo "Username: {{ .Values.guid }}-{{ .Values.tenant }}"
               echo "Password: {{ .Values.bastionSshPassword }}"
               echo ""
               echo "To connect, use the following command:"
-              echo "ssh {{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.tenant }}.svc.cluster.local"
+              echo "ssh {{ .Values.guid }}-{{ .Values.tenant }}@rhem-on-rhel-ssh.wksp-{{ .Values.guid }}-{{ .Values.tenant }}.svc.cluster.local"
