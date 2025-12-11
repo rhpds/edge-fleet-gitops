@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: configure-bastion
     app.kubernetes.io/part-of: bastion
 spec:
-  backoffLimit: 5
+  backoffLimit: 20
   template:
     metadata:
       labels:
