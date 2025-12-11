@@ -28,3 +28,5 @@ spec:
         giteaAdminUsername: "{{ .Values.giteaAdminUsername }}"
         giteaAdminPassword: "{{ .Values.giteaAdminPassword }}"
         openshiftClusterIngressDomain: "{{ .Values.openshiftClusterIngressDomain }}"
+        tenant: {{ .Values.tenant }}
+        guid: "{{ .Values.guid }}"

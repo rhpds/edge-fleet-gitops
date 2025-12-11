@@ -26,3 +26,4 @@ spec:
       values: |
         gitBranch: rh1-2026
         tenant: {{ .Values.tenant }}
+        guid: "{{ .Values.guid }}"
