@@ -48,6 +48,7 @@ data:
             org_id: "{{ .Values.satelliteOrg }}"
             activationkey: "{{ .Values.satelliteActivationKey }}"
             server_hostname: "{{ .Values.satelliteUrl }}"
+            force_register: true
         - name: Install some base packages
           ansible.builtin.dnf:
             name:
