@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: bastion
   namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
   labels:
     application: bastion
 spec:

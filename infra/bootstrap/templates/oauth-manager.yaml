@@ -6,6 +6,8 @@ metadata:
   namespace: openshift-gitops
   labels:
     application: oauth-manager
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: ''

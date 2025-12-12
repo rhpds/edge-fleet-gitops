@@ -6,6 +6,8 @@ metadata:
   namespace: openshift-gitops
   labels:
     application: rhem
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   syncPolicy:
     automated:
