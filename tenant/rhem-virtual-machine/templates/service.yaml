@@ -50,3 +50,16 @@ spec:
       port: 8888
       targetPort: 8888
       name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webui-oidc-pam
+spec:
+  selector:
+    kubevirt.io/domain: rhem-virtual-machine
+  ports:
+   - name: webui-oidc-pam
+      protocol: TCP
+      port: 8444
+      targetPort: 8444
