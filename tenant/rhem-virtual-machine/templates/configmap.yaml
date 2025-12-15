@@ -42,13 +42,32 @@ data:
             disable_gpg_check: true
           when:
             - "'katello-ca-consumer' not in _installed_packages.stdout"
-        - name: Register to satellite
-          community.general.redhat_subscription:
-            state: present
-            org_id: "{{ .Values.satelliteOrg }}"
-            activationkey: "{{ .Values.satelliteActivationKey }}"
-            server_hostname: "{{ .Values.satelliteUrl }}"
-            force_register: true
+        - name: Check for existing registration
+          ansible.builtin.shell:
+            cmd: subscription-manager status
+          register: _registration_status
+        - name: Registration flow if needed
+          when:
+            - "'Simple Content Access' not in _registration_status.stdout"
+          block:
+            - name: Set uuid fact
+              ansible.builtin.set_fact:
+                _generated_uuid: "{{ "{{" }} lookup('pipe', 'uuidgen') {{ "}}" }}"
+            - name: Ensure facts override dir exists
+              ansible.builtin.file:
+                path: /etc/rhsm/facts
+                state: directory
+            - name: Push facts override
+              ansible.builtin.template:
+                src: override.facts.j2
+                dest: /etc/rhsm/facts/override.facts
+            - name: Register to satellite
+              community.general.redhat_subscription:
+                state: present
+                org_id: "{{ .Values.satelliteOrg }}"
+                activationkey: "{{ .Values.satelliteActivationKey }}"
+                server_hostname: "{{ .Values.satelliteUrl }}"
+                force_register: true
         - name: Install some base packages
           ansible.builtin.dnf:
             name:
@@ -243,3 +262,8 @@ data:
     EOF
 
     echo "Done."
+  override.facts.j2: |
+    {
+      'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
+      'network.hostname-override': '{{ "{{" }} _generated_uuid {{ "}}" }}'
+    }
