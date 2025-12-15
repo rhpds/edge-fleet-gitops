@@ -59,7 +59,7 @@ spec:
   selector:
     kubevirt.io/domain: rhem-virtual-machine
   ports:
-   - name: webui-oidc-pam
+    - name: webui-oidc-pam
       protocol: TCP
       port: 8444
       targetPort: 8444
