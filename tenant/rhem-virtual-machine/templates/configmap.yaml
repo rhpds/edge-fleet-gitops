@@ -234,7 +234,7 @@ data:
     fi
 
     echo "Ensuring the correct namespace is used..."
-    oc project wksp-{{ .Values.rhemVirtualMachine.username }}
+    oc project wksp-{{ .Values.guid }}-{{ .Values.rhemVirtualMachine.username }}
 
     if [[ "$DELETE_FLAG" == "true" ]]; then
       echo "Deleting existing DataVolume..."
@@ -262,7 +262,7 @@ data:
         volumeMode: Block
       source:
         http:
-          url: http://import-disk-image.wksp-{{ .Values.rhemVirtualMachine.username }}.svc.cluster.local:8888/disk.qcow2
+          url: http://import-disk-image.wksp-{{ .Values.guid }}-{{ .Values.rhemVirtualMachine.username }}.svc.cluster.local:8888/disk.qcow2
     EOF
 
     echo "Done."
