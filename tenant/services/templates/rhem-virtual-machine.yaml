@@ -31,3 +31,4 @@ spec:
         satelliteActivationKey: "{{ .Values.satelliteActivationKey }}"
         satelliteOrg: "{{ .Values.satelliteOrg }}"
         satelliteUrl: "{{ .Values.satelliteUrl }}"
+        guid: "{{ .Values.guid }}"
