@@ -138,6 +138,14 @@ data:
             owner: root
             group: root
             mode: '0755'
+        - name: Pre-pull some images | root
+          conatiners.podman.podman_image:
+            name: "{{ "{{" }} image {{ "}}" }}"
+          loop:
+            - registry.redhat.io/rhel9-eus/rhel-9.6-bootc:9.6
+            - registry.redhat.io/rhel9/bootc-image-builder:latest
+          loop_control:
+            loop_var: image
 
   import-disk-image.sh: |
     #!/usr/bin/env bash
