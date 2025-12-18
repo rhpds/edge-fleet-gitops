@@ -10,4 +10,4 @@ spec:
   source:
     pvc:
       name: drone-virtual-machine
-      namespace: wksp-{{ .Values.tenant }}
+      namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}

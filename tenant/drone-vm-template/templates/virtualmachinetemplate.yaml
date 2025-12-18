@@ -80,7 +80,7 @@ objects:
             sourceRef:
               kind: DataSource
               name: drone-virtual-machine
-              namespace: wksp-{{ .Values.tenant }}
+              namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}
             storage:
               resources:
                 requests:
