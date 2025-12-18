@@ -55,7 +55,7 @@ data:
             body_format: json
             body:
               clone_addr: 'https://github.com/kenosborn-rh/rh1-2026-rhem-lab.git'
-              repo_name: edge-fleet-gitops
+              repo_name: rh1-2026-rhem-lab
               mirror: true
               mirror_interval: 1h
               private: false
