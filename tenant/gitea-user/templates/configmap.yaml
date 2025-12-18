@@ -54,7 +54,7 @@ data:
             method: POST
             body_format: json
             body:
-              clone_addr: 'https://github.com/rhpds/edge-fleet-gitops.git'
+              clone_addr: 'https://github.com/kenosborn-rh/rh1-2026-rhem-lab.git'
               repo_name: edge-fleet-gitops
               mirror: true
               mirror_interval: 1h
