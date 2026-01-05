@@ -30,12 +30,12 @@ data:
       tasks:
         - name: Set the system hostname
           ansible.builtin.hostname:
-            name: rhem-on-rhel.wksp-{{ .Values.guid }}-{{ .Values.tenant }}.svc.cluster.local
+            name: rhem-on-rhel.wksp-{{ .Values.guid }}-{{ .Values.rhemVirtualMachine.username }}.svc.cluster.local
             use: systemd
         - name: Put line into /etc/hosts
           ansible.builtin.lineinfile:
             path: /etc/hosts
-            line: '127.0.0.1 rhem-on-rhel.wksp-{{ .Values.guid }}-{{ .Values.tenant }}.svc.cluster.local rhem-on-rhel'
+            line: '127.0.0.1 rhem-on-rhel.wksp-{{ .Values.guid }}-{{ .Values.rhemVirtualMachine.username }}.svc.cluster.local rhem-on-rhel'
         - name: Check for existing cert bundle
           ansible.builtin.shell:
             cmd: rpm -qa
