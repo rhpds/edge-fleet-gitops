@@ -45,10 +45,12 @@ spec:
           sockets: 4
           threads: 1
         devices:
+          blockMultiQueue: true
           disks:
             - disk:
                 bus: 'virtio'
               name: 'rootdisk'
+              cache: writethrough
             - disk:
                 bus: 'virtio'
               name: 'cloudinitdisk'
