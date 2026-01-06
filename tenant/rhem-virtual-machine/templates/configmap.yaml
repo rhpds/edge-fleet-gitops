@@ -85,7 +85,11 @@ data:
               - container-tools
               - vim
               - systemd-container
+        - name: Install some more packages but ignore GPG keys
+          ansible.builtin.dnf:
+            name:
               - flightctl-cli
+            disable_gpg_check: true
         - name: Download oc client from mirror site
           ansible.builtin.get_url:
             url: https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
