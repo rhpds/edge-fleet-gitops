@@ -85,7 +85,7 @@ data:
               - container-tools
               - vim
               - systemd-container
-              - flightctl-cli-1.0.0~rc3-1.el9
+              - flightctl-cli
         - name: Download oc client from mirror site
           ansible.builtin.get_url:
             url: https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
