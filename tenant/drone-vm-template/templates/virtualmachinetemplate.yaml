@@ -98,7 +98,6 @@ objects:
         spec:
           architecture: amd64
           domain:
-            blockMultiQueue: true
             cpu:
               cores: 1
               sockets: 1
