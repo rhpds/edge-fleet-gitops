@@ -6,7 +6,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: rhem-on-rhel-webui
+    name: rhem-on-rhel
   port:
     targetPort: webui
   tls:
@@ -19,7 +19,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: rhem-on-rhel-api
+    name: rhem-on-rhel
   port:
     targetPort: api
   tls:
@@ -32,8 +32,8 @@ metadata:
 spec:
   to:
     kind: Service
-    name: webui-oidc-pam
+    name: rhem-on-rhel
   port:
-    targetPort: 8444
+    targetPort: oidc-pam
   tls:
     termination: passthrough
