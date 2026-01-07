@@ -56,8 +56,7 @@ data:
             body:
               clone_addr: 'https://github.com/kenosborn-rh/rh1-2026-rhem-lab.git'
               repo_name: rh1-2026-rhem-lab
-              mirror: true
-              mirror_interval: 1h
+              mirror: false
               private: false
               description: "use for RHEM lab"
               repo_owner: "{{ .Values.guid }}-{{ .Values.tenant }}"
