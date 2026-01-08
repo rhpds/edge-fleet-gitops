@@ -184,7 +184,7 @@ data:
           notify: restart_flightctl
         - name: Meta - flush handlers
           ansible.builtin.meta: flush_handlers
-        - name: Create groups via podman exec
+        - name: Create groups via podman exec | admin
           containers.podman.podman_container_exec:
             name: flightctl-pam-issuer
             command: groupadd flightctl-admin
@@ -195,6 +195,41 @@ data:
           failed_when:
             - _admin_group_create.rc | int != 0
             - "'already exists' not in _admin_group_create.stderr"
+        - name: Create groups via podman exec | operator
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            command: groupadd flightctl-operator
+          register: _operator_group_create
+          become: true
+          changed_when:
+            - _operator_group_create.rc | int == 0
+          failed_when:
+            - _operator_group_create.rc | int != 0
+            - "'already exists' not in _operator_group_create.stderr"
+        - name: Create groups via podman exec | viewer
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            command: groupadd flightctl-viewer
+          register: _viewer_group_create
+          become: true
+          changed_when:
+            - _viewer_group_create.rc | int == 0
+          failed_when:
+            - _viewer_group_create.rc | int != 0
+            - "'already exists' not in _viewer_group_create.stderr"
+        - name: Setup user account
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            argv:
+              - sh
+              - -c
+              - 'echo "{{ "{{" }} ansible_user {{ "}}" }}:redhat123" | chpasswd'
+          become: true
+        - name: Make user admin
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            command: "usermod -aG flightctl-admin {{ "{{" }} ansible_user {{ "}}" }}"
+          become: true
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
