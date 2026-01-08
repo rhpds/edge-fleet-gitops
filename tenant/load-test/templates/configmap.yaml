@@ -155,7 +155,7 @@ data:
                         'redirectUris': (
                           _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris | default(none) 
                           or [static_redirect_url]
-                        ) + [webui_callback_url]
+                        ) | union([webui_callback_url])
                       }, recursive=True)
                     }, recursive=True)
                   }, recursive=True)
@@ -189,6 +189,7 @@ data:
             name: flightctl-pam-issuer
             command: groupadd flightctl-admin
           register: _admin_group_create
+          become: true
           changed_when:
             - _admin_group_create.rc | int == 0
           failed_when:
