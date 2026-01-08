@@ -135,11 +135,11 @@ data:
           register: _flightctl_config
         - name: Parse config and update variables
           ansible.builtin.set_fact:
-            _flightctl_current_config: "{{ _flightctl_config['content'] | b64decode | from_yaml }}"
+            _flightctl_current_config: "{{ "{{" }} _flightctl_config['content'] | b64decode | from_yaml {{ "}}" }}"
         - name: Apply changes to the configuration structure
           ansible.builtin.set_fact:
             _flightctl_modified_config: >-
-              {{
+              {{ "{{" }}
                 _flightctl_current_config | combine({
                   'global': _flightctl_current_config | combine({
                     'auth': _flightctl_current_config.auth | combine({
@@ -153,10 +153,10 @@ data:
                     }, recursive=True)
                   }, recursive=True)
                 }, recursive=True)
-              }}
+              {{ "}}" }}
         - name: Write the modified config back to the file
           ansible.builtin.copy:
-            content: "{{ _flightctl_modified_config | to_nice_yaml(indent=2, sort_keys=False) }}"
+            content: "{{ "{{" }} _flightctl_modified_config | to_nice_yaml(indent=2, sort_keys=False) {{ "}}" }}"
             dest: "/etc/flightctl/josh.yaml"
             backup: yes
           become: true
