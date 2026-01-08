@@ -114,7 +114,7 @@ data:
             {{- end }}
           vars:
             ansible_password: "{{ .Values.bastionSshPassword }}"
-            static_redirect_uri: "http://localhost:8080/callback"
+            static_redirect_url: "http://localhost:8080/callback"
 
   playbook-to-deploy.yaml: |
     ---
@@ -154,8 +154,8 @@ data:
                         'issuer': oidc_pam_url,
                         'redirectUris': (
                           _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris | default(none) 
-                          or [webui_callback_url]
-                        ) + [oidc_pam_url]
+                          or [static_redirect_url]
+                        ) + [webui_callback_url]
                       }, recursive=True)
                     }, recursive=True)
                   }, recursive=True)
