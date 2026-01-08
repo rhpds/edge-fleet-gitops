@@ -119,4 +119,8 @@ data:
             name: flightctl.target
             state: started
             enabled: true
-
+  override.facts.j2: |
+    {
+      'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
+      'network.hostname-override': '{{ "{{" }} _generated_uuid {{ "}}" }}'
+    }
