@@ -84,7 +84,7 @@ data:
             dest: /home/admin/{{ .Values.guid }}-load-test/playbook.yaml
         - name: Copy down run command
           ansible.builtin.copy:
-            src: |
+            content: |
               #!/bin/bash
               ansible-playbook playbook.yaml --inventory inventory.yaml --forks {{ .Values.user.count }} -vv
             dest: /home/admin/{{ .Values.guid }}-load-test/run-load-test.sh
