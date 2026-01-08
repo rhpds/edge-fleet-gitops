@@ -129,6 +129,6 @@ data:
       'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
       'network.hostname-override': '{{ "{{" }} _generated_uuid {{ "}}" }}'
     }
-  ansible-cfg-to-deploy.cfg:
+  ansible-cfg-to-deploy.cfg: |
     [defaults]
     host_key_checking = False
