@@ -7,6 +7,50 @@ data:
   inventory.yaml: |
     ---
     all:
+      hosts:
+        bastion:
+          ansible_user: admin
+          ansible_password: {{ .Values.bastionSshPassword }}
+          ansible_host: bastion-ssh.bastion.svc.cluster.local
+          ansible_become: true
+  playbook.yaml: |
+    ---
+    - name: Setup user on bastion host
+      hosts:
+        - all
+      gather_facts: false
+      pre_tasks:
+        - name: Wait for VM to be up
+          ansible.builtin.wait_for_connection:
+            timeout: 600
+      tasks:
+        - name: Install Ansible engine
+          ansible.builtin.dnf:
+            name:
+              - ansible
+        - name: Create folder to hold files
+          ansible.builtin.file:
+            path: /home/admin/{{ .Values.guid }}-load-test
+            state: directory
+        - name: Copy down inventory
+          ansible.builtin.copy:
+            src: inventory-to-deploy.yaml
+            dest: /home/admin/{{ .Values.guid }}-load-test/inventory.yaml
+        - name: Copy down playbook
+          ansible.builtin.copy:
+            src: playbok-to-deploy.yaml
+            dest: /home/admin/{{ .Values.guid }}-load-test/playbook.yaml
+        - name: Copy down run command
+          ansible.builtin.copy:
+            src: |
+              #!/bin/bash
+              ansible-playbook playbook.yaml --inventory inventory.yaml --forks {{ .Values.user.count }} -vv
+            dest: /home/admin/{{ .Values.guid }}-load-test/run-load-test.sh
+            mode: '0755'
+  
+  inventory-to-deploy.yaml: |
+    ---
+    all:
       children:
         {{ .Values.guid }}:
           hosts:
@@ -18,7 +62,7 @@ data:
             {{- end }}
           vars:
             ansible_password: "{{ .Values.bastionSshPassword }}"
-  playbook.yaml: |
+  playbook-to-deploy.yaml: |
     ---
     - name: Initial setup of the bastion host
       hosts:
