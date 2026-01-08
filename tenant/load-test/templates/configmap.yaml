@@ -109,7 +109,8 @@ data:
               ansible_host: rhem-on-rhel-ssh.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local
               ansible_user: {{ $.Values.user.prefix }}{{ add $index 1 }}
               oidc_pam_url: "rhem-on-rhel-oidc-pam-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/api/v1/auth"
-              webui_url: "rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/callback"
+              webui_url: "rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}"
+              webui_callback_url: "rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/callback"
             {{- end }}
           vars:
             ansible_password: "{{ .Values.bastionSshPassword }}"
@@ -153,7 +154,7 @@ data:
                         'issuer': oidc_pam_url,
                         'redirectUris': (
                           _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris | default(none) 
-                          or [static_redirect_uri]
+                          or [webui_callback_url]
                         ) + [oidc_pam_url]
                       }, recursive=True)
                     }, recursive=True)
