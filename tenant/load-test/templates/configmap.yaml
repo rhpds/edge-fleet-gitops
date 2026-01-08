@@ -46,7 +46,7 @@ data:
           register: _registration_status
         - name: Registration flow if needed
           when:
-            - "'Simple Content Access' not in _registration_status.stdout"
+            - "'Registered' not in _registration_status.stdout"
           block:
             - name: Set uuid fact
               ansible.builtin.set_fact:
