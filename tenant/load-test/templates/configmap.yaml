@@ -69,7 +69,7 @@ data:
         - name: Install Ansible engine
           ansible.builtin.dnf:
             name:
-              - ansible
+              - ansible-core
         - name: Create folder to hold files
           ansible.builtin.file:
             path: /home/admin/{{ .Values.guid }}-load-test
