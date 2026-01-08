@@ -184,6 +184,16 @@ data:
           notify: restart_flightctl
         - name: Meta - flush handlers
           ansible.builtin.meta: flush_handlers
+        - name: Create groups via podman exec
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            command: groupadd flightctl-admin
+          register: _admin_group_create
+          changed_when:
+            - _admin_group_create.rc | int == 0
+          failed_when:
+            - _admin_group_create.rc | int != 0
+            - "'already exists' not in _admin_group_create.stderr"
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
