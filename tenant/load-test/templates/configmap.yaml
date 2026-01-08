@@ -154,7 +154,7 @@ data:
                         'redirectUris': (
                           _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris | default(none) 
                           or [static_redirect_uri]
-                        ) + [oidc_pam_url]]
+                        ) + [oidc_pam_url]
                       }, recursive=True)
                     }, recursive=True)
                   }, recursive=True)
