@@ -39,6 +39,9 @@ spec:
             - name: playbook-to-deploy
               mountPath: /runner/playbook-to-deploy.yaml
               subPath: playbook-to-deploy.yaml
+            - name: ansible-cfg-to-deploy
+              mountPath: /runner/ansible-cfg-to-deploy.cfg
+              subPath: ansible-cfg-to-deploy.cfg
             - name: scratch
               mountPath: /.ansible
       volumes:
@@ -55,6 +58,9 @@ spec:
           configMap:
             name: load-test-{{ .Values.guid }}-ansible-inputs
         - name: template
+          configMap:
+            name: load-test-{{ .Values.guid }}-ansible-inputs
+        - name: ansible-cfg-to-deploy
           configMap:
             name: load-test-{{ .Values.guid }}-ansible-inputs
         - name: scratch

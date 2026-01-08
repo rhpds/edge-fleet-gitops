@@ -83,6 +83,10 @@ data:
           ansible.builtin.copy:
             src: playbook-to-deploy.yaml
             dest: /home/admin/{{ .Values.guid }}-load-test/playbook.yaml
+        - name: Copy down ansible.cfg
+          ansible.builtin.copy:
+            src: ansible-cfg-to-deploy.cfg
+            dest: /home/admin/{{ .Values.guid }}-load-test/ansible.cfg
         - name: Copy down run command
           ansible.builtin.copy:
             content: |
@@ -125,3 +129,6 @@ data:
       'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
       'network.hostname-override': '{{ "{{" }} _generated_uuid {{ "}}" }}'
     }
+  ansible-cfg-to-deploy.cfg:
+    [defaults]
+    host_key_checking = False
