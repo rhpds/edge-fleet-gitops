@@ -281,7 +281,7 @@ data:
               - label=type:unconfined_t
             volumes:
               - /var/lib/containers/storage:/var/lib/containers/storage
-              - "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output":/output
+              - "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output:/output"
             image: registry.redhat.io/rhel9/bootc-image-builder:latest
             command: --type qcow2 localhost/drone-image:v1
           become: true
