@@ -24,48 +24,48 @@ data:
           ansible.builtin.wait_for_connection:
             timeout: 600
       tasks:
-       - name: Check for existing cert bundle
-         ansible.builtin.shell:
-           cmd: rpm -qa
-         register: _installed_packages
-         changed_when: false
-       - name: Install Satellite cert bundle
-         ansible.builtin.dnf:
-           name: https://demosat-ha.infra.demo.redhat.com/pub/katello-ca-consumer-latest.noarch.rpm
-           sslverify: false
-           validate_certs: false
-           state: present
-           disable_gpg_check: true
-         when:
-           - "'katello-ca-consumer' not in _installed_packages.stdout"
-       - name: Check for existing registration
-         ansible.builtin.shell:
-           cmd: subscription-manager status
-         failed_when: false
-         changed_when: false
-         register: _registration_status
-       - name: Registration flow if needed
-         when:
-           - "'Simple Content Access' not in _registration_status.stdout"
-         block:
-           - name: Set uuid fact
-             ansible.builtin.set_fact:
-               _generated_uuid: "{{ "{{" }} lookup('pipe', 'uuidgen') {{ "}}" }}"
-           - name: Ensure facts override dir exists
-             ansible.builtin.file:
-               path: /etc/rhsm/facts
-               state: directory
-           - name: Push facts override
-             ansible.builtin.template:
-               src: override.facts.j2
-               dest: /etc/rhsm/facts/override.facts
-           - name: Register to satellite
-             community.general.redhat_subscription:
-               state: present
-               org_id: "{{ .Values.satelliteOrg }}"
-               activationkey: "{{ .Values.satelliteActivationKey }}"
-               server_hostname: "{{ .Values.satelliteUrl }}"
-               force_register: true
+        - name: Check for existing cert bundle
+          ansible.builtin.shell:
+            cmd: rpm -qa
+          register: _installed_packages
+          changed_when: false
+        - name: Install Satellite cert bundle
+          ansible.builtin.dnf:
+            name: https://demosat-ha.infra.demo.redhat.com/pub/katello-ca-consumer-latest.noarch.rpm
+            sslverify: false
+            validate_certs: false
+            state: present
+            disable_gpg_check: true
+          when:
+            - "'katello-ca-consumer' not in _installed_packages.stdout"
+        - name: Check for existing registration
+          ansible.builtin.shell:
+            cmd: subscription-manager status
+          failed_when: false
+          changed_when: false
+          register: _registration_status
+        - name: Registration flow if needed
+          when:
+            - "'Simple Content Access' not in _registration_status.stdout"
+          block:
+            - name: Set uuid fact
+              ansible.builtin.set_fact:
+                _generated_uuid: "{{ "{{" }} lookup('pipe', 'uuidgen') {{ "}}" }}"
+            - name: Ensure facts override dir exists
+              ansible.builtin.file:
+                path: /etc/rhsm/facts
+                state: directory
+            - name: Push facts override
+              ansible.builtin.template:
+                src: override.facts.j2
+                dest: /etc/rhsm/facts/override.facts
+            - name: Register to satellite
+              community.general.redhat_subscription:
+                state: present
+                org_id: "{{ .Values.satelliteOrg }}"
+                activationkey: "{{ .Values.satelliteActivationKey }}"
+                server_hostname: "{{ .Values.satelliteUrl }}"
+                force_register: true
         - name: Install Ansible engine
           ansible.builtin.dnf:
             name:
