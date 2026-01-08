@@ -44,6 +44,6 @@ spec:
             name: load-test-{{ .Values.guid }}-ansible-inputs
         - name: template
           configMap:
-            name: rhem-vm-ansible-job-inputs
+            name: load-test-{{ .Values.guid }}-ansible-inputs
         - name: scratch
           emptyDir: {}
