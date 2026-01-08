@@ -301,3 +301,4 @@ data:
   ansible-cfg-to-deploy.cfg: |
     [defaults]
     host_key_checking = False
+    callbacks_enabled = profile_tasks
