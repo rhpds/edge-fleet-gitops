@@ -108,9 +108,9 @@ data:
             {{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}:
               ansible_host: rhem-on-rhel-ssh.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local
               ansible_user: {{ $.Values.user.prefix }}{{ add $index 1 }}
-              oidc_pam_url: "rhem-on-rhel-oidc-pam-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/api/v1/auth"
-              webui_url: "rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}"
-              webui_callback_url: "rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/callback"
+              oidc_pam_url: "https://rhem-on-rhel-oidc-pam-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/api/v1/auth"
+              webui_url: "https://rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}"
+              webui_callback_url: "https://rhem-on-rhel-webui-wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.{{ $.Values.openshiftClusterIngressDomain }}/callback"
             {{- end }}
           vars:
             ansible_password: "{{ .Values.bastionSshPassword }}"
