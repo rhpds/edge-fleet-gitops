@@ -119,11 +119,13 @@ data:
           ansible.builtin.dnf:
             name:
               - flightctl-services
+          become: true
         - name: Start/enable the services
           ansible.builtin.systemd:
             name: flightctl.target
             state: started
             enabled: true
+          become: true
   override.facts.j2: |
     {
       'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
