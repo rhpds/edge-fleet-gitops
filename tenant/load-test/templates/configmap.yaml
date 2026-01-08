@@ -188,6 +188,8 @@ data:
           ansible.builtin.systemd:
             name: flightctl.target
             state: restarted
+          listen:
+            - restart_flightctl
   override.facts.j2: |
     {
       'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
