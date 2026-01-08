@@ -75,6 +75,8 @@ data:
           ansible.builtin.file:
             path: /home/admin/{{ .Values.guid }}-load-test
             state: directory
+            owner: admin
+            group: admin
         - name: Copy down inventory
           ansible.builtin.copy:
             src: inventory-to-deploy.yaml
@@ -111,6 +113,7 @@ data:
             {{- end }}
           vars:
             ansible_password: "{{ .Values.bastionSshPassword }}"
+            static_redirect_uri: "http://localhost:8080/callback"
 
   playbook-to-deploy.yaml: |
     ---
@@ -148,7 +151,10 @@ data:
                       }, recursive=True),
                       'pamOidcIssuer': _flightctl_current_config.global.auth.pamOidcIssuer | combine({
                         'issuer': oidc_pam_url,
-                        'redirectUris': _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris + [webui_url]
+                        'redirectUris': (
+                          _flightctl_current_config.global.auth.pamOidcIssuer.redirectUris | default(none) 
+                          or [static_redirect_uri]
+                        ) + [oidc_pam_url]]
                       }, recursive=True)
                     }, recursive=True)
                   }, recursive=True)
