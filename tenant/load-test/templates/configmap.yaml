@@ -251,7 +251,40 @@ data:
             flightctl certificate request --signer=enrollment --expiration=365d --output=embedded > /home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/config.yaml
           args:
             creates: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/config.yaml"
-              
+        - name: Modify the agent config for faster checkin
+          ansible.builtin.lineinfile:
+            line: "{{ "{{" }} line {{ "}}" }}"
+            path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/config.yaml"
+          loop:
+            - 'spec-fetch-interval: 0m10s'
+            - 'status-update-interval: 0m10s'
+          loop_control:
+            loop_var: line
+        - name: Build image
+          containers.podman.podman_image:
+            name: localhost/drone-image:v1
+            path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build"
+            build:
+              format: oci
+          become: true
+        - name: Make output directory
+          ansible.builtin.file:
+            path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output"
+            state: directory
+        - name: Build qcow2 image
+          containers.podman.podman_image:
+            name: create-qcow2
+            rm: true
+            interactive: true
+            privileged: true
+            security_opt:
+              - label=type:unconfined_t
+            volumes:
+              - /var/lib/containers/storage:/var/lib/containers/storage
+              - "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output":/output
+            image: registry.redhat.io/rhel9/bootc-image-builder:latest
+            command: --type qcow2 localhost/drone-image:v1
+          become: true
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
