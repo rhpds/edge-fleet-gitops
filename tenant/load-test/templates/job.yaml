@@ -30,6 +30,9 @@ spec:
             - name: playbook
               mountPath: /runner/playbook.yaml
               subPath: playbook.yaml
+            - name: template
+              mountPath: /runner/override.facts.j2
+              subPath: override.facts.j2
             - name: scratch
               mountPath: /.ansible
       volumes:
@@ -39,5 +42,8 @@ spec:
         - name: playbook
           configMap:
             name: load-test-{{ .Values.guid }}-ansible-inputs
+        - name: template
+          configMap:
+            name: rhem-vm-ansible-job-inputs
         - name: scratch
           emptyDir: {}
