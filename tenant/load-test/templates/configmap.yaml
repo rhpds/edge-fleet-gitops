@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: load-test-{{ .Values.guid }}-ansible-inputs
+data:
+  inventory.yaml: |
+    ---
+    all:
+      children:
+        {{ .Values.guid }}:
+          hosts:
+            {{- $userCount := int .Values.user.count }}
+            {{- range $index := until $userCount }}
+            {{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}:
+              ansible_host: rhem-on-rhel-ssh.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local
+              ansible_user: {{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}
+            {{- end }}
+          vars:
+            ansible_password: "{{ .Values.bastionSshPassword }}"
+  playbook.yaml: |
+    ---
+    - name: Initial setup of the bastion host
+      hosts:
+        - {{ .Values.guid }}
+      tasks:
+        - name: Install flightctl
+          ansible.builtin.dnf:
+            name:
+              - flightctl-services
+        - name: Start/enable the services
+          ansible.builtin.systemd:
+            name: flightctl.target
+            state: started
+            enabled: true
+
