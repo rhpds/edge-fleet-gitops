@@ -163,9 +163,31 @@ data:
         - name: Write the modified config back to the file
           ansible.builtin.copy:
             content: "{{ "{{" }} _flightctl_modified_config | to_nice_yaml(indent=2, sort_keys=False) {{ "}}" }}"
-            dest: "/etc/flightctl/josh.yaml"
+            dest: "/etc/flightctl/service-config.yaml"
             backup: yes
           become: true
+          notify: restart_flightctl
+        - name: Edit the BASE_UI_URL
+          ansible.builtin.lineinfile:
+            path: /usr/share/flightctl/flightctl-ui/env.template
+            regexp: '^BASE_UI_URL='
+            line: 'BASE_UI_URL={{ "{{" }} webui_url {{ "}}" }}'
+          become: true
+          notify: restart_flightctl
+        - name: Edit/add the IS_RHEM line
+          ansible.builtin.lineinfile:
+            path: /usr/share/flightctl/flightctl-ui/env.template
+            regexp: '^IS_RHEM='
+            line: 'IS_RHEM=true'
+          become: true
+          notify: restart_flightctl
+        - name: Meta - flush handlers
+          ansible.builtin.meta: flush_handlers
+      handlers:
+        - name: Restart Flightctl
+          ansible.builtin.systemd:
+            name: flightctl.target
+            state: restarted
   override.facts.j2: |
     {
       'dmi.system.uuid': '{{ "{{" }} _generated_uuid {{ "}}" }}',
