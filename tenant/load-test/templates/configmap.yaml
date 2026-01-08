@@ -272,7 +272,7 @@ data:
             path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output"
             state: directory
         - name: Build qcow2 image
-          containers.podman.podman_image:
+          containers.podman.podman_container:
             name: create-qcow2
             rm: true
             interactive: true
