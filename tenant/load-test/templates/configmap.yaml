@@ -217,7 +217,18 @@ data:
           failed_when:
             - _viewer_group_create.rc | int != 0
             - "'already exists' not in _viewer_group_create.stderr"
-        - name: Setup user account
+        - name: Create user via podman exec
+          containers.podman.podman_container_exec:
+            name: flightctl-pam-issuer
+            command: adduser {{ "{{" }} ansible_user {{ "}}" }}
+          register: _user_create
+          become: true
+          changed_when:
+            - _user_create.rc | int == 0
+          failed_when:
+            - _user_create.rc | int != 0
+            - "'already exists' not in _user_create.stderr"
+        - name: Set user account password
           containers.podman.podman_container_exec:
             name: flightctl-pam-issuer
             argv:
@@ -230,6 +241,10 @@ data:
             name: flightctl-pam-issuer
             command: "usermod -aG flightctl-admin {{ "{{" }} ansible_user {{ "}}" }}"
           become: true
+        - name: Clone git repo
+          ansible.builtin.git:
+            repo: 'https://gitea.{{ .Values.openshiftClusterIngressDomain }}/{{ .Values.guid }}-{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab.git'
+            dest: /home/admin/rh1-2026-rhem-lab
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
