@@ -70,6 +70,7 @@ data:
           ansible.builtin.dnf:
             name:
               - ansible-core
+              - sshpass
         - name: Create folder to hold files
           ansible.builtin.file:
             path: /home/admin/{{ .Values.guid }}-load-test
