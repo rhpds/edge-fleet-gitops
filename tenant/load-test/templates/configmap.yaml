@@ -276,6 +276,7 @@ data:
             name: create-qcow2
             rm: true
             interactive: true
+            detach: false
             privileged: true
             security_opt:
               - label=type:unconfined_t
