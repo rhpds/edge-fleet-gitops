@@ -131,7 +131,7 @@ data:
           become: true
         - name: Read in flightctl's config
           ansible.builtin.slurp:
-            src: /etc/flightctl/config.yaml
+            src: /etc/flightctl/service-config.yaml
           register: _flightctl_config
         - name: Parse config and update variables
           ansible.builtin.set_fact:
