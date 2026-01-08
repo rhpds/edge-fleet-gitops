@@ -244,7 +244,7 @@ data:
         - name: Clone git repo
           ansible.builtin.git:
             repo: 'https://gitea.{{ .Values.openshiftClusterIngressDomain }}/{{ .Values.guid }}-{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab.git'
-            dest: /home/admin/rh1-2026-rhem-lab
+            dest: /home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
