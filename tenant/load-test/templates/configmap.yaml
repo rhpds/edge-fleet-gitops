@@ -80,7 +80,7 @@ data:
             dest: /home/admin/{{ .Values.guid }}-load-test/inventory.yaml
         - name: Copy down playbook
           ansible.builtin.copy:
-            src: playbok-to-deploy.yaml
+            src: playbook-to-deploy.yaml
             dest: /home/admin/{{ .Values.guid }}-load-test/playbook.yaml
         - name: Copy down run command
           ansible.builtin.copy:
