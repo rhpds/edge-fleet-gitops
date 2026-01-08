@@ -245,6 +245,14 @@ data:
           ansible.builtin.git:
             repo: 'https://gitea.{{ .Values.openshiftClusterIngressDomain }}/{{ .Values.guid }}-{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab.git'
             dest: /home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab
+        - name: Login to RHEM and get agent config
+          ansible.builtin.shell:
+            cmd: |
+              flightctl login https://rhem-on-rhel-api-wksp-{{ .Values.guid }}-{{ "{{" }} ansible_user {{ "}}" }}.{{ .Values.openshiftClusterIngressDomain }} --username {{ "{{" }} ansible_user {{ "}}" }} --password redhat123 --insecure-skip-tls-verify
+              flightctl certificate request --signer=enrollment --expiration=365d --output=embedded > /home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/config.yaml
+            args:
+              creates: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/config.yaml"
+              
       handlers:
         - name: Restart Flightctl
           ansible.builtin.systemd:
