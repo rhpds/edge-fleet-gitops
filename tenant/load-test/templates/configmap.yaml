@@ -93,6 +93,7 @@ data:
           ansible.builtin.copy:
             content: |
               #!/bin/bash
+              ansible-galaxy collection install ansible.posix containers.podman
               ansible-playbook playbook.yaml --inventory inventory.yaml --forks {{ .Values.user.count }} -vv
             dest: /home/admin/{{ .Values.guid }}-load-test/run-load-test.sh
             mode: '0755'
@@ -121,6 +122,21 @@ data:
     - name: Run through the exercises
       hosts:
         - {{ .Values.guid }}
+      pre_tasks:
+        - name: Reset if requested
+          become: true
+          when:
+            - reset_test is defined
+            - reset_test
+          block:
+            - name: Remove drone image
+              containers.podman.podman_image:
+                name: localhost/drone-image:v1
+                state: absent
+            - name: Remove qcow2 output
+              ansible.builtin.file:
+                path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output"
+                state: absent
       tasks:
         - name: Install flightctl
           ansible.builtin.dnf:
