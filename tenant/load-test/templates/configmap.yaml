@@ -137,6 +137,8 @@ data:
               ansible.builtin.file:
                 path: "/home/{{ "{{" }} ansible_user {{ "}}" }}/rh1-2026-rhem-lab/build/output"
                 state: absent
+            - name: Force reset podman
+              ansible.builtin.shell: podman system reset --force
       tasks:
         - name: Install flightctl
           ansible.builtin.dnf:
