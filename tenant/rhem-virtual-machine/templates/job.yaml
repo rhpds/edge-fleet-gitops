@@ -5,7 +5,7 @@ metadata:
   name: configure-student-vm
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded, HookFailed
   labels:
     app.kubernetes.io/name: configure-student-vm
     app.kubernetes.io/part-of: rhem-virtual-machine
