@@ -50,7 +50,7 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                  - {{ include "rhem-virtual-machine.determineWorker" (list $.Values.rhemVirtualMachine.username $.Values.guid) }}
+                  - {{ include "rhem-virtual-machine.determineWorker" (list $.Values.rhemVirtualMachine.username $.Values.guid $.Values.virtualMachinesPerWorker) }}
       architecture: 'amd64'
       domain:
         cpu:

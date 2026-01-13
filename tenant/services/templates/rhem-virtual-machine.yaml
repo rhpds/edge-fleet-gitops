@@ -32,3 +32,4 @@ spec:
         satelliteOrg: "{{ .Values.satelliteOrg }}"
         satelliteUrl: "{{ .Values.satelliteUrl }}"
         guid: "{{ .Values.guid }}"
+        virtualMachinesPerWorker: 10
