@@ -38,6 +38,7 @@ data:
             status_code:
               - 200
               - 204
+              - 404
           loop:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
