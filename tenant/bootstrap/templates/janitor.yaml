@@ -36,3 +36,4 @@ spec:
         bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
         giteaAdminUsername: "{{ .Values.gitea_admin_username }}"
         giteaAdminPassword: "{{ .Values.gitea_admin_password }}"
+        openshiftClusterIngressDomain: "{{ .Values.openshiftClusterIngressDomain }}"
