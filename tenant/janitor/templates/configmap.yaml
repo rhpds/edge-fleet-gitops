@@ -14,6 +14,7 @@ metadata:
   name: janitor-ansible-job-inputs
   annotations:
     argocd.argoproj.io/hook: PostDelete
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 data:
   playbook.yaml: |
     ---
