@@ -6,7 +6,7 @@ metadata:
   annotations:
     note: "Placeholder resource used to trigger cleanup."
 data:
-  deleteme: true
+  deleteme: "true"
 ---
 apiVersion: v1
 kind: ConfigMap
