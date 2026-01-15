@@ -2,16 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: trigger
-  annotations:
-    note: "Placeholder resource used to trigger cleanup."
-data:
-  deleteme: "true"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: janitor-ansible-job-inputs
+  namespace: wksp-{{ .Values.guid }}-{{ .Values.tenant }}-janitor
   annotations:
     argocd.argoproj.io/hook: PostDelete
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
