@@ -35,6 +35,9 @@ data:
             url_username: "{{ .Values.giteaAdminUsername }}"
             url_password: "{{ .Values.giteaAdminPassword }}"
             method: DELETE
+            status_code:
+              - 200
+              - 204
           loop:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
