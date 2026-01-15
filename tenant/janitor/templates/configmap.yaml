@@ -84,7 +84,6 @@ data:
           when:
             - provider_exists
             - oauth_state == "absent"
-    ---
     - name: Cleanup the bastion host
       hosts:
         - bastion
