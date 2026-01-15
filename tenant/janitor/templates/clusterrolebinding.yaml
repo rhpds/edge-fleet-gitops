@@ -3,7 +3,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ .Values.guid }}-janitor-oauth-manager-rb
-  namespace: openshift-config
   annotations:
     argocd.argoproj.io/hook: PostDelete
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
