@@ -34,7 +34,5 @@ spec:
           {{- end }}
         guid: "{{ .Values.guid }}"
         bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
-        tenant: {{ "{{" }}.tenant{{- "}}"}}
-        bastionSshPassword: "{{ .Values.bastion_ssh_password }}"
         giteaAdminUsername: "{{ .Values.gitea_admin_username }}"
         giteaAdminPassword: "{{ .Values.gitea_admin_password }}"
