@@ -13,7 +13,7 @@ spec:
   destination:
     name: ''
     server: https://kubernetes.default.svc
-    namespace: wksp-{{ .Values.guid }}
+    namespace: wksp-{{ .Values.guid }}-janitor
   project: default
   syncPolicy:
     automated:
