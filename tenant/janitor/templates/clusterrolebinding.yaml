@@ -6,6 +6,7 @@ metadata:
   namespace: openshift-config
   annotations:
     argocd.argoproj.io/hook: PostDelete
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
