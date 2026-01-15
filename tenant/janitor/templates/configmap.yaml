@@ -12,7 +12,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: janitor-ansible-job-inputs
-  argocd.argoproj.io/hook: PostDelete
+  annotations:
+    argocd.argoproj.io/hook: PostDelete
 data:
   playbook.yaml: |
     ---
