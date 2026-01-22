@@ -14,5 +14,5 @@ roleRef:
   name: blackbox-exporter
 subjects:
 - kind: ServiceAccount
-  name: blackbox-exporter-serviceaccount
+  name: blackbox-exporter
   namespace: {{ .Release.Namespace }}
