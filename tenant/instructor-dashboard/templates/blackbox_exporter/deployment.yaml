@@ -33,6 +33,6 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: blackbox-config
+          name: blackbox-exporter-config
       serviceAccount: blackbox-exporter
       serviceAccountName: blackbox-exporter
