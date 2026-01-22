@@ -32,7 +32,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - rhem-on-rhel-ssh.wksp-{{ $.Values.guid }}.{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:22
+              - rhem-on-rhel-ssh.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:22
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
@@ -50,7 +50,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - rhem-on-rhel.wksp-{{ $.Values.guid }}.{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:443
+              - rhem-on-rhel.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:443
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
@@ -68,7 +68,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - import-disk-image.wksp-{{ $.Values.guid }}.{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8888/disk.qcow2
+              - import-disk-image.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8888/disk.qcow2
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
@@ -86,7 +86,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - drone-tracker.wksp-{{ $.Values.guid }}.{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8080
+              - drone-tracker.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8080
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
@@ -104,7 +104,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - drone-cam.wksp-{{ $.Values.guid }}.{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8081
+              - drone-cam.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:8081
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
