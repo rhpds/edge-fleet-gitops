@@ -13,4 +13,4 @@ spec:
     targetPort: 9115
     protocol: TCP
   selector:
-    app.kubernetes.io/name: blackbox-exporter-deployment
+    app.kubernetes.io/name: blackbox-exporter

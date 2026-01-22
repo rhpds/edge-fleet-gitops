@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/part-of: instructor-dashboard
 spec:
   selector:
-    app.kubernetes.io/name: pushgwateway-deployment
+    app.kubernetes.io/name: pushgwateway
   ports:
     - protocol: TCP
       port: 9091

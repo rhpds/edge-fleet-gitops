@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/part-of: instructor-dashboard
 spec:
   selector:
-    app.kubernetes.io/name: grafana-deployment
+    app.kubernetes.io/name: grafana
   ports:
     - protocol: TCP
       port: 3000
