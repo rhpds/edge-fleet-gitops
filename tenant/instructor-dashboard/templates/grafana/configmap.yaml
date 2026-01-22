@@ -270,7 +270,7 @@ data:
                 "uid": "PBFA97CFB590B2093"
               },
               "editorMode": "code",
-              "expr": "probe_success{instance=\"rhem-on-rhel.wksp-{{ .Values.guid }}-$student.svc.cluster.local:443\"}",
+              "expr": "probe_success{instance=\"https://rhem-on-rhel.wksp-{{ .Values.guid }}-$student.svc.cluster.local:443\"}",
               "legendFormat": "__auto",
               "range": true,
               "refId": "A"
