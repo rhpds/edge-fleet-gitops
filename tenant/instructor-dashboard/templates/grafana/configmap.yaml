@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+data:
+  GF_SECURITY_ADMIN_USER: ansible
+  GF_SECURITY_ADMIN_PASSWORD: 'R3dh4t123!'
+  GF_DEFAULT_THEME: light
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: datasource-config
+data:
+  prometheus.yml: |
+    ---
+    apiVersion: 1
+    deleteDatasources:
+      - name: Prometheus
+        orgId: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      orgId: 1
+      url: http://prometheus:9090
+      isDefault: true
+      version: 1
+      editable: true
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: dashboards-config
+# data:
+#   dashboards.yml: |
+#     ---
+#     apiVersion: 1
+#     providers:
+#       - name: 'Workload Locator'
+#         orgId: 1
+#         folder: '/var/lib/grafana/dashboards/'
+#         folderUid: ''
+#         type: file
+#         disableDeletion: false
+#         updateIntervalSeconds: 10
+#         allowUiUpdates: true
+#         options:
+#           path: /var/lib/grafana/dashboards
+#           foldersFromFilesStructure: true
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: dashboards
+# data:
+#   system-dashboard.json:
+# {{ .Files.Get "files/system-dashboard.json" | toJson | indent 4 }}
