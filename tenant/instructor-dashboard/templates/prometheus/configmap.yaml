@@ -50,7 +50,7 @@ data:
           - targets:
             {{- $userCount := int .Values.user.count }}
             {{- range $index := until $userCount }}
-              - rhem-on-rhel.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:443
+              - https://rhem-on-rhel.wksp-{{ $.Values.guid }}-{{ $.Values.user.prefix }}{{ add $index 1 }}.svc.cluster.local:443
             {{- end }}
         relabel_configs:
           - source_labels: [__address__]
@@ -63,7 +63,7 @@ data:
         metrics_path: /probe
         scrape_interval: 5s
         params:
-          module: [http_2xx]
+          module: [http_file_check]
         static_configs:
           - targets:
             {{- $userCount := int .Values.user.count }}

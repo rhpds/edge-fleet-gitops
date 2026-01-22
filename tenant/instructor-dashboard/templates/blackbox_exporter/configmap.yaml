@@ -23,6 +23,12 @@ data:
         http:
           tls_config:
             insecure_skip_verify: true
+      http_file_check:
+          prober: http
+          timeout: 5s
+          http:
+            method: HEAD
+            valid_status_codes: [200]
       ssh_banner:
         prober: tcp
         tcp:
