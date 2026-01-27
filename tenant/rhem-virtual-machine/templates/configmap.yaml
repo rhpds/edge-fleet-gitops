@@ -240,7 +240,7 @@ data:
         --name httpd-qcow2 \
         -p 8888:8080 \
         -v "$QCOW_PATH":/var/www/html:Z \
-        ubi9/httpd-24
+        registry.redhat.io/ubi9/httpd-24@sha256:47a0b3f12211320d1828524a324ab3ec9deac97c17b9d3f056c87d3384d9eb79
 
       echo "Container 'httpd-qcow2' running on port 8888"
     fi
