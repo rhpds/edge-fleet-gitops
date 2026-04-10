@@ -14,6 +14,8 @@ spec:
   project: default
   syncPolicy:
     automated: {}
+    syncOptions:
+    - CreateNamespaces=true
   source:
     repoURL: https://github.com/rhpds/edge-fleet-gitops.git
     targetRevision: {{ .Values.gitBranch | default "main" }}
