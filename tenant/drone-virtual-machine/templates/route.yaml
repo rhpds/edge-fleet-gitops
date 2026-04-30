@@ -9,6 +9,8 @@ spec:
     name: drone-cam
   port:
     targetPort: drone-cam
+  tls:
+    termination: passthrough
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
@@ -20,3 +22,5 @@ spec:
     name: drone-tracker
   port:
     targetPort: drone-tracker
+  tls:
+    termination: passthrough
