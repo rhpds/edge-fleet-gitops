@@ -13,5 +13,5 @@ deployer:
 workspace:
   git:
     url: https://github.com/rhpds/ci-template-gitops.git
-    revision: main
-    path: workspace
+    revision: gitops-example
+    path: tenant/workspace
